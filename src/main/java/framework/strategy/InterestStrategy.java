@@ -1,5 +1,5 @@
 package framework.strategy;
 
 public interface InterestStrategy {
-    double computeInterest(double balance);
+    double calculateInterest(double balance);
 }

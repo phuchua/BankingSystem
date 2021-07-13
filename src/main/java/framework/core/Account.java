@@ -37,7 +37,7 @@ public class Account extends Observable {
 
 	public void addInterest(){
 		double balance = getBalance();
-		double amount = interestStrategy.computeInterest(balance);
+		double amount = interestStrategy.calculateInterest(balance);
 		AccountEntry entry = new AccountEntry(amount, "interest", "", "");
 		entryList.add(entry);
 		measurementsChanged(false);

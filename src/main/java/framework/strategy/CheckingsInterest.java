@@ -1,7 +1,7 @@
 package framework.strategy;
 
 public class CheckingsInterest implements InterestStrategy {
-    public double computeInterest(double balance) {
+    public double calculateInterest(double balance) {
         if (balance < 1000){
             return 0.015*balance;
         } else

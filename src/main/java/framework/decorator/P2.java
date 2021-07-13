@@ -10,7 +10,7 @@ public class P2 extends InterestPromotionDecorator {
     }
 
     @Override
-    public double computeInterest(double balance) {
-        return interestStrategy.computeInterest(balance) * (1 + RATE);
+    public double calculateInterest(double balance) {
+        return interestStrategy.calculateInterest(balance) * (1 + RATE);
     }
 }

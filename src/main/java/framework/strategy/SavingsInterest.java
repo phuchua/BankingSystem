@@ -1,7 +1,7 @@
 package framework.strategy;
 
 public class SavingsInterest implements InterestStrategy {
-    public double computeInterest(double balance) {
+    public double calculateInterest(double balance) {
         if (balance < 1000){
             return 0.01*balance;
         } else if (balance < 5000) {
@@ -10,3 +10,4 @@ public class SavingsInterest implements InterestStrategy {
             return 0.04*balance;
     }
 }
+
