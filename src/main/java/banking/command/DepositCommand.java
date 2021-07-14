@@ -1,4 +1,4 @@
-package framework.command;
+package banking.command;
 
 import framework.core.AccountService;
 

@@ -1,5 +1,7 @@
 package framework.core;
 
+import ccard.CreditCardStrategy;
+import ccard.CreditCardType;
 import framework.observer.EmailSender;
 import framework.observer.Logger;
 import framework.observer.SMSSender;
@@ -11,33 +13,34 @@ import java.util.List;
 import java.util.Observable;
 
 public class Account extends Observable {
-	private Customer customer;
-	private String accountNumber;
+	protected Customer customer;
+	protected String accountNumber;
+	protected InterestStrategy accountType;
+	protected AccountClass accountClass;
+	protected CreditCardStrategy creditCardStrategy;
+	protected CreditCardType creditCardType;
 
 	// added code here for Lab02
-	private Logger logger = new Logger();
-	private SMSSender smsSender = new SMSSender();
-	private EmailSender emailSender = new EmailSender();
+	protected Logger logger = new Logger();
+	protected SMSSender smsSender = new SMSSender();
+	protected EmailSender emailSender = new EmailSender();
 
 	public void notifyAllObservers() {
 		setChanged();
 		notifyObservers();
 	}
 
-	// added code here for Lab01
-	private InterestStrategy interestStrategy;
-
-	public InterestStrategy getInterestStrategy() {
-		return interestStrategy;
+	public InterestStrategy getAccountType() {
+		return accountType;
 	}
 
-	public void setInterestStrategy(InterestStrategy interestStrategy) {
-		this.interestStrategy = interestStrategy;
+	public void setAccountType(InterestStrategy accountType) {
+		this.accountType = accountType;
 	}
 
 	public void addInterest(){
 		double balance = getBalance();
-		double amount = interestStrategy.calculateInterest(balance);
+		double amount = accountType.calculateInterest(balance);
 		AccountEntry entry = new AccountEntry(amount, "interest", "", "");
 		entryList.add(entry);
 		measurementsChanged(false);
@@ -48,6 +51,15 @@ public class Account extends Observable {
 
 	public Account(String accountNumber) {
 		this.accountNumber = accountNumber;
+		this.addObserver(emailSender);
+		measurementsChanged(true);
+	}
+
+	public Account(String accountNumber, InterestStrategy accountType, AccountClass accountClass) {
+		this.accountNumber = accountNumber;
+		this.accountType = accountType;
+		this.accountClass = accountClass;
+		this.creditCardStrategy = null;
 		this.addObserver(emailSender);
 		measurementsChanged(true);
 	}

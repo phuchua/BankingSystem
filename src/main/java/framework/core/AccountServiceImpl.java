@@ -1,6 +1,7 @@
 package framework.core;
 
-import framework.command.Command;
+import ccard.CreditCardType;
+import banking.command.Command;
 import framework.decorator.P1;
 import framework.decorator.P2;
 import framework.decorator.P3;
@@ -11,6 +12,7 @@ import framework.factory.ProductionDAO;
 import framework.factory.TestingDAO;
 import framework.strategy.InterestStrategy;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -20,10 +22,7 @@ public class AccountServiceImpl implements AccountService {
 	private DataFactory dataFactory;
 	private List<Command> commands;
 	private int undoRedoPosition = -1;
-
-	public AccountServiceImpl(){
-		//accountDAO = new AccountDAOImpl();
-	}
+	private CustomerDAO customerDAO;
 
 	public AccountServiceImpl(EnvironmentType environmentType) {
 		switch (environmentType) {
@@ -36,6 +35,64 @@ public class AccountServiceImpl implements AccountService {
 		}
 		this.accountDAO = this.dataFactory.createAccountDAO();
 		this.commands = new ArrayList<>();
+		customerDAO = new CustomerDAOImpl();
+	}
+
+	@Override
+	public Account createAccount(String accountNumber, String customerName, InterestStrategy accountType, AccountClass accountClass, String customerStreet, String customerCity, String customerState, String customerZip, String customerEmail) {
+		Account account = new Account(accountNumber);
+		Customer customer = new Customer(customerName);
+		account.setCustomer(customer);
+
+		accountDAO.saveAccount(account);
+
+		return account;
+	}
+
+	@Override
+	public Account createPersonalAccount(String accountNumber, String customerName, InterestStrategy accountType, AccountClass accountClass, String customerStreet, String customerCity, String customerState, String customerZip, String customerEmail, LocalDate birthdate) {
+		Account account = new Account(accountNumber, accountType, AccountClass.PERSONAL);
+
+		Customer customer = customerDAO.getCustomerList().stream()
+				.filter(x -> x.getName().equals(customerName))
+				.findFirst()
+				.orElse(null);
+		if (customer == null)
+			customer = new Customer(customerName, customerEmail, customerStreet, customerCity, customerState, customerZip);
+
+		account.setCustomer(customer);
+		customer.setBirthday(birthdate);
+		account.setCustomer(customer);
+
+		accountDAO.saveAccount(account);
+		customerDAO.saveCustomer(customer);
+
+		return account;
+	}
+
+	@Override
+	public Account createCompanyAccount(String accountNumber, String customerName, InterestStrategy accountType, AccountClass accountClass, String customerStreet, String customerCity, String customerState, String customerZip, String customerEmail, int noOfEmployee) {
+		Account account = new Account(accountNumber, accountType, AccountClass.COMPANY);
+
+		Customer customer = customerDAO.getCustomerList().stream()
+				.filter(x -> x.getName().equals(customerName))
+				.findFirst()
+				.orElse(null);
+		if (customer == null)
+			customer = new Customer(customerName, customerEmail, customerStreet, customerCity, customerState, customerZip);
+
+		account.setCustomer(customer);
+		customer.setNoOfEmployee(noOfEmployee);
+
+		accountDAO.saveAccount(account);
+		customerDAO.saveCustomer(customer);
+
+		return account;
+	}
+
+	@Override
+	public Account createCreditCard(String ccNumber, String customerName, InterestStrategy accountType, AccountClass accountClass, String customerStreet, String customerCity, String customerState, String customerZip, String customerEmail, LocalDate expireDate, CreditCardType creditCardType) {
+		return null;
 	}
 
 	public Account createAccount(String accountNumber, String customerName) {
@@ -51,7 +108,7 @@ public class AccountServiceImpl implements AccountService {
 	// added new createAccount method
 	public Account createAccount(String accountNumber, String customerName, InterestStrategy accountType) {
 		Account account = new Account(accountNumber);
-		account.setInterestStrategy(accountType);
+		account.setAccountType(accountType);
 		Customer customer = new Customer(customerName);
 		account.setCustomer(customer);
 
@@ -103,13 +160,13 @@ public class AccountServiceImpl implements AccountService {
 		Account account = accountDAO.loadAccount(accountNumber);
 		switch (promotionType) {
 			case P1:
-				account.setInterestStrategy(new P1(account.getInterestStrategy()));
+				account.setAccountType(new P1(account.getAccountType()));
 				break;
 			case P2:
-				account.setInterestStrategy(new P2(account.getInterestStrategy()));
+				account.setAccountType(new P2(account.getAccountType()));
 				break;
 			case P3:
-				account.setInterestStrategy(new P3(account.getInterestStrategy()));
+				account.setAccountType(new P3(account.getAccountType()));
 				break;
 		}
 	}

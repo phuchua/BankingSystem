@@ -12,7 +12,7 @@ public class Customer {
 	private String state;
 	private String zip;
 	private String emailAddress;
-	private Date Birthday;
+	private LocalDate birthday;
 	private int noOfEmployee;
 	private LocalDate expirationDate;
 	List<Account> accountList = new ArrayList<>();
@@ -80,8 +80,8 @@ public class Customer {
 		return emailAddress;
 	}
 
-	public void setBirthday(Date birthday) {
-		Birthday = birthday;
+	public void setBirthday(LocalDate birthday) {
+		birthday = birthday;
 	}
 
 	public void setNoOfEmployee(int noOfEmployee) {
