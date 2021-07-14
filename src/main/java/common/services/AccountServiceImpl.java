@@ -2,8 +2,11 @@ package common.services;
 
 
 import common.models.Account;
+import common.models.AccountEntry;
 import common.models.Customer;
 import common.observers.AccountCreateObserver;
+import common.observers.AccountEntryObserver;
+import common.repositories.AccountEntryRepository;
 import common.repositories.AccountRepository;
 import common.repositories.CustomerRepository;
 import framework.RepositoryEvents;
@@ -13,11 +16,14 @@ public class AccountServiceImpl implements AccountService {
 
 	AccountRepository accountRepository;
 	CustomerRepository customerRepository;
+	AccountEntryRepository accountEntryRepository;
 
 	public AccountServiceImpl(){
 		accountRepository = new AccountRepository();
 		accountRepository.addObserver(new AccountCreateObserver(), RepositoryEvents.POST_SAVE);
 		customerRepository = new CustomerRepository();
+		accountEntryRepository = new AccountEntryRepository();
+		accountEntryRepository.addObserver(new AccountEntryObserver(),RepositoryEvents.POST_SAVE);
 	}
 
 	@Override
@@ -39,7 +45,10 @@ public class AccountServiceImpl implements AccountService {
 			throw new IllegalArgumentException();
 		}
 
-		account.deposit(amount, "Deposit");
+		AccountEntry entry = new AccountEntry(amount, "Deposit", accountNumber, "");
+		entry.setAccount(account);
+		accountEntryRepository.save(entry);
+		account.addEntry(entry);
 		accountRepository.update(account);
 	}
 
@@ -51,24 +60,11 @@ public class AccountServiceImpl implements AccountService {
 			throw new IllegalArgumentException();
 		}
 
-		account.deposit(amount, "Withdraw");
+		AccountEntry entry = new AccountEntry(-amount, "Withdraw", accountNumber, "");
+		entry.setAccount(account);
+		accountEntryRepository.save(entry);
+		account.addEntry(entry);
 		accountRepository.update(account);
 	}
 
-	@Override
-	public void transferFunds(String fromAccountNumber, String toAccountNumber, double amount, String description) {
-		Account fromAccount = accountRepository.loadOne(fromAccountNumber);
-		Account toAccount = accountRepository.loadOne(toAccountNumber);
-
-		if(fromAccount == null || toAccount == null){
-			throw new IllegalArgumentException();
-		}
-
-		fromAccount.withdraw(amount, description);
-		fromAccount.deposit(amount, description);
-
-		accountRepository.update(fromAccount);
-		accountRepository.update(toAccount);
-
-	}
 }

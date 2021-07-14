@@ -6,6 +6,7 @@ import common.strategy.InterestStrategy;
 import framework.Storage.Storable;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -21,6 +22,7 @@ public  class Account implements Storable<String> {
         this.id = id;
         this.customer = customer;
         this.accountType = accountType;
+        entryList = new ArrayList<AccountEntry>();
     }
 
     @Override
@@ -28,15 +30,10 @@ public  class Account implements Storable<String> {
         return this.id;
     }
 
-    public void deposit(double amount, String description) {
-        AccountEntry entry = new AccountEntry(amount, description, "", "");
-        entryList.add(entry);
+    public void addEntry(AccountEntry accountEntry){
+        entryList.add(accountEntry);
     }
 
-    public void withdraw(double amount, String description) {
-        AccountEntry entry = new AccountEntry(-amount, description, "", "");
-        entryList.add(entry);
-    }
 
     public double getBalance() {
         double balance = 0;

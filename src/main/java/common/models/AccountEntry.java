@@ -15,6 +15,7 @@ public  class AccountEntry implements Storable<String> {
     private String description;
     private String fromAccountNumber;
     private String fromPersonName;
+    private Account account;
 
 
     public AccountEntry(double amount, String description, String fromAccountNumber, String fromPersonName) {
