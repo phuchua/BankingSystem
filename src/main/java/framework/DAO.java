@@ -5,12 +5,14 @@ import framework.Storage.Storage;
 
 import java.util.Collection;
 
-public class DAO<O extends Storable<K>,K> {
+public abstract class DAO<O extends Storable<K>,K> {
     private Storage<O,K> storage;
 
-    public DAO(Storage<O,K> storage){
-        this.storage = storage;
+    public DAO(){
+        this.storage = createStorageFactory();
     }
+
+    public abstract Storage<O,K> createStorageFactory();
 
     public void create(O obj) {
         storage.create(obj);

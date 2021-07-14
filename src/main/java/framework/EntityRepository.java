@@ -1,8 +1,10 @@
 package framework;
 
+import banking.Customer;
 import framework.Observer.Observable;
 import framework.Observer.Observer;
 import framework.Storage.Storable;
+import framework.Storage.Storage;
 
 import java.util.*;
 
@@ -10,9 +12,11 @@ import java.util.*;
 public abstract class EntityRepository<O extends Storable<K>,K> implements Observable<RepositoryEvents,O> {
     DAO<O,K> dao;
 
-    public Map<RepositoryEvents, Set<Observer>> actionListeners(){
-        return new HashMap<RepositoryEvents, Set<Observer>>();
+    public EntityRepository(){
+        this.dao = getDao();
     }
+
+    public abstract DAO<O,K> getDao();
 
     @Override
     public void notify(RepositoryEvents event,O obj ){
@@ -43,7 +47,7 @@ public abstract class EntityRepository<O extends Storable<K>,K> implements Obser
         return obj;
     }
 
-    public final Collection<O> getAll(K k){
+    public final Collection<O> getAll(){
         return this.dao.getAll();
     }
 }
