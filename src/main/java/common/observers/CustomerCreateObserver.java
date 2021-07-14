@@ -1,5 +1,6 @@
-package banking;
+package common.observers;
 
+import common.models.Customer;
 import framework.Components.Notification.Email.EmailMessage;
 import framework.Components.Notification.Email.EmailNotification;
 import framework.Observer.Observer;

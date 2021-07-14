@@ -1,18 +1,18 @@
-package banking;
+package common.repositories;
 
+import common.observers.CustomerCreateObserver;
+import common.dao.CustomerDAO;
+import common.models.Customer;
 import framework.DAO;
 import framework.EntityRepository;
 import framework.Observer.Observer;
 import framework.RepositoryEvents;
-import framework.Storage.MemoryStorage;
-import framework.Storage.Storage;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
 public class CustomerRepository extends EntityRepository<Customer,String> {
-
 
     @Override
     public DAO<Customer, String> getDao() {

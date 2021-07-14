@@ -1,6 +1,6 @@
 package banking.command;
 
-import framework.core.AccountService;
+import common.services.AccountService;
 
 public class DepositCommand implements Command {
     AccountService accountService;
