@@ -18,27 +18,27 @@ public class Application {
 
 		// add Personal account of Checking
 		accountService.createPersonalAccount("1111111", "Personal Checking",
-				new CheckingsInterest(), AccountClass.PERSONAL, "75 Pioneer Ranch",
+				new CheckingsInterest(), AccountClass.PERSONAL, "11 Pioneer Ranch",
 				"Las Vegas", "Nevada", "98113",
-				"frank@gmail.com", LocalDate.of(1985, 10, 5));
+				"customer1@gmail.com", LocalDate.of(1985, 10, 5));
 
 		// add Personal account of Savings
 		accountService.createPersonalAccount("2222222", "Personal Savings",
-				new SavingsInterest(), AccountClass.PERSONAL, "75 Pioneer Ranch",
-				"Las Vegas", "Nevada", "98113",
-				"frank@gmail.com", LocalDate.of(1985, 10, 5));
+				new SavingsInterest(), AccountClass.PERSONAL, "22 Burlington",
+				"Fairfield", "Iowa", "52556",
+				"customer2@gmail.com", LocalDate.of(1985, 10, 5));
 
 		// add Company account of Checking
 		accountService.createCompanyAccount("3333333", "Company Checking",
-				new CheckingsInterest(), AccountClass.COMPANY, "80 Alexander Ave",
-				"Iowa", "Nevada", "98113",
-				"frank@gmail.com", 100);
+				new CheckingsInterest(), AccountClass.COMPANY, "33 N 4th St",
+				"Ottumwa", "Iowa", "52559",
+				"customer3@gmail.com", 100);
 
 		// add Company account of Savings
 		accountService.createCompanyAccount("4444444", "Company Savings",
-				new SavingsInterest(), AccountClass.COMPANY, "80 Alexander Ave",
-				"Iowa", "Nevada", "98113",
-				"frank@gmail.com", 100);
+				new SavingsInterest(), AccountClass.COMPANY, "44 Martin Ave",
+				"Des Moines", "Iowa", "52558",
+				"customer4@gmail.com", 100);
 
 		//accountService.createCreditCard("8473-8478-4829-8847", "Credit Card 1", AccountType, AccountClass.CREDITCARD,street,city,state,zip,email,expDate, creditCardType);
 

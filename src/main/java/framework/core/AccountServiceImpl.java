@@ -28,7 +28,7 @@ public class AccountServiceImpl implements AccountService {
 		account.setCustomer(customer);
 
 		accountDAO.saveAccount(account);
-		account.addObserver(new EmailSender());
+		//account.addObserver(new EmailSender());
 
 		return account;
 	}
@@ -50,7 +50,7 @@ public class AccountServiceImpl implements AccountService {
 
 		accountDAO.saveAccount(account);
 		customerDAO.saveCustomer(customer);
-		account.addObserver(new EmailSender());
+		//account.addObserver(new EmailSender());
 
 		return account;
 	}
@@ -71,7 +71,7 @@ public class AccountServiceImpl implements AccountService {
 
 		accountDAO.saveAccount(account);
 		customerDAO.saveCustomer(customer);
-		account.addObserver(new EmailSender());
+		//account.addObserver(new EmailSender());
 
 		return account;
 	}
@@ -99,14 +99,13 @@ public class AccountServiceImpl implements AccountService {
 		account.setCustomer(customer);
 
 		accountDAO.saveAccount(account);
-		account.addObserver(new EmailSender());
+		//account.addObserver(new EmailSender());
 		return account;
 	}
 
 	public void deposit(String accountNumber, double amount) {
 		Account account = accountDAO.loadAccount(accountNumber);
 		account.deposit(amount);
-		account.addObserver(new EmailSender());
 		accountDAO.updateAccount(account);
 	}
 
@@ -122,7 +121,6 @@ public class AccountServiceImpl implements AccountService {
 	public void withdraw(String accountNumber, double amount) {
 		Account account = accountDAO.loadAccount(accountNumber);
 		account.withdraw(amount);
-		account.addObserver(new EmailSender());
 		accountDAO.updateAccount(account);
 	}
 

@@ -47,6 +47,7 @@ public class Account extends Observable {
 		this.accountType = accountType;
 		this.accountClass = accountClass;
 		this.creditCardStrategy = null;
+		this.addObserver(emailSender);
 	}
 
 	public String getAccountNumber() {
