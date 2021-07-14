@@ -35,10 +35,10 @@ public class EmailSender implements Observer {
                 sb.append("\n");
 
                 if (entry.getAmount() > 0)
-                    sb.append("There is a deposit " + entry.getAmount() + " to account " + entry.getFromAccountNumber() + "( " + entry.getDescription() + ")");
+                    sb.append("There is a deposit " + entry.getAmount() + " to account " + entry.getFromAccountNumber() + "(" + entry.getDescription() + ")");
 
                 if (entry.getAmount() < 0)
-                    sb.append("There is a withdraw " + entry.getAmount() + " from account " + entry.getFromAccountNumber() + entry.getFromAccountNumber() + "( " + entry.getDescription() + ")");
+                    sb.append("There is a withdraw " + entry.getAmount() + " from account " + entry.getFromAccountNumber() + " (" + entry.getDescription() + ")");
                 sb.append("\n");
                 sb.append("Account balance of  is " + acc.getBalance());
                 sb.append("\n------------------------------------------------------");

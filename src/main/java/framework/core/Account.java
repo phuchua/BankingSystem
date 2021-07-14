@@ -90,6 +90,7 @@ public class Account extends Observable {
 		
 		entryList.add(fromEntry);
 		toAccount.addEntry(toEntry);
+		notifyChanges(fromEntry);
 	}
 
 	public Customer getCustomer() {

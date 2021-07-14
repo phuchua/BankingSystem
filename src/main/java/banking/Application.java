@@ -45,16 +45,18 @@ public class Application {
 		// use account 1
 		Command depositCommand = new DepositCommand(accountService, "1111111", 1000);
 		depositCommand.execute();
+		depositCommand = new DepositCommand(accountService, "1111111", 200);
+		depositCommand.execute();
 		//depositCommand.undo();
 		//depositCommand.redo();
-		Command withdrawCommand = new WithdrawCommand(accountService, "1111111", 500);
+		Command withdrawCommand = new WithdrawCommand(accountService, "1111111", 300);
 		withdrawCommand.execute();
 
 		// use account 2
 		depositCommand = new DepositCommand(accountService, "2222222", 2000);
 		depositCommand.execute();
-		Command transferFundsCommand = new TransferFundsCommand(accountService, "2222222", "1111111", 500, "payment of invoice 100001");
-		transferFundsCommand.execute();
+		//Command transferFundsCommand = new TransferFundsCommand(accountService, "2222222", "1111111", 700, "payment of invoice 100001");
+		//transferFundsCommand.execute();
 		//transferFundsCommand.undo();
 
 		// use account 3
