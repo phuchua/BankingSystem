@@ -1,5 +1,8 @@
 package framework;
 
+import framework.Storage.Storable;
+import framework.Storage.Storage;
+
 import java.util.Collection;
 
 public class DAO<O extends Storable<K>,K> {

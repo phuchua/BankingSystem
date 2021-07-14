@@ -1,14 +1,14 @@
 package banking;
 
-import framework.command.Command;
-import framework.command.DepositCommand;
-import framework.command.TransferFundsCommand;
-import framework.command.WithdrawCommand;
-import framework.core.*;
-import framework.decorator.PromotionType;
-import framework.factory.EnvironmentType;
-import framework.strategy.CheckingsInterest;
-import framework.strategy.SavingsInterest;
+import framework.oldfiles.command.Command;
+import framework.oldfiles.command.DepositCommand;
+import framework.oldfiles.command.TransferFundsCommand;
+import framework.oldfiles.command.WithdrawCommand;
+import framework.oldfiles.core.*;
+import framework.oldfiles.decorator.PromotionType;
+import framework.oldfiles.factory.EnvironmentType;
+import framework.oldfiles.strategy.CheckingsInterest;
+import framework.oldfiles.strategy.SavingsInterest;
 
 public class Application {
 
