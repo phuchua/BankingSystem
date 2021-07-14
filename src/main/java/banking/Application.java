@@ -47,7 +47,7 @@ public class Application {
 		depositCommand.execute();
 		//depositCommand.undo();
 		//depositCommand.redo();
-		Command withdrawCommand = new WithdrawCommand(accountService, "1111111", 200);
+		Command withdrawCommand = new WithdrawCommand(accountService, "1111111", 500);
 		withdrawCommand.execute();
 
 		// use account 2
@@ -58,11 +58,11 @@ public class Application {
 		//transferFundsCommand.undo();
 
 		// use account 3
-		depositCommand = new DepositCommand(accountService, "3333333", 3000);
+		depositCommand = new DepositCommand(accountService, "3333333", 300);
 		depositCommand.execute();
 
 		// use account 4
-		depositCommand = new DepositCommand(accountService, "4444444", 4000);
+		depositCommand = new DepositCommand(accountService, "4444444", 400);
 		depositCommand.execute();
 
 		// calculate interest

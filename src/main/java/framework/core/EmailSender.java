@@ -19,12 +19,33 @@ public class EmailSender implements Observer {
     public void update(Observable o, Object arg) {
         if (o instanceof Account){
             Account acc = (Account)o;
-            this.balance = acc.getBalance();
-            display();
-        }
-    }
+            AccountEntry entry = (AccountEntry) arg;
 
-    public void display(){
-        System.out.println("EmailSender - Account is created. Balance is " + this.balance);
+            if (acc.getAccountClass().equals(AccountClass.COMPANY)
+                    ||(acc.getAccountClass().equals(AccountClass.PERSONAL) && (entry.getAmount()>500 || entry.getAmount()<0))
+                    ||(acc.getAccountClass().equals(AccountClass.PERSONAL) && acc.getBalance()+entry.getAmount()<0)
+                    ||(acc.getAccountClass().equals(AccountClass.CREDITCARD) && (entry.getAmount()>500 || entry.getAmount()<0)
+                    ||(acc.getAccountClass().equals(AccountClass.CREDITCARD) && acc.getBalance()+entry.getAmount()<0)))
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.append("------------------------------------------------------\n");
+                sb.append("Sent to: " + acc.customer.getEmailAddress());
+                sb.append("\n");
+                sb.append("Account: " + acc.getCustomer().getName());
+                sb.append("\n");
+
+                if (entry.getAmount() > 0)
+                    sb.append("There is a deposit " + entry.getAmount() + " to account " + entry.getFromAccountNumber() + "( " + entry.getDescription() + ")");
+
+                if (entry.getAmount() < 0)
+                    sb.append("There is a withdraw " + entry.getAmount() + " from account " + entry.getFromAccountNumber() + entry.getFromAccountNumber() + "( " + entry.getDescription() + ")");
+                sb.append("\n");
+                sb.append("Account balance of  is " + acc.getBalance());
+                sb.append("\n------------------------------------------------------");
+
+                System.out.println("Email sent");
+                System.out.println(sb.toString());
+            }
+        }
     }
 }

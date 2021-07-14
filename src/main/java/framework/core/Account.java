@@ -18,11 +18,6 @@ public class Account extends Observable {
 	protected CreditCardType creditCardType;
 	protected EmailSender emailSender = new EmailSender();
 
-	public void notifyAllObservers() {
-		setChanged();
-		notifyObservers();
-	}
-
 	public InterestStrategy getAccountType() {
 		return accountType;
 	}
@@ -73,13 +68,13 @@ public class Account extends Observable {
 	public void deposit(double amount) {
 		AccountEntry entry = new AccountEntry(amount, "deposit", "", "");
 		entryList.add(entry);
-		balanceChanged();
+		notifyChanges(entry);
 	}
 
 	public void withdraw(double amount) {
 		AccountEntry entry = new AccountEntry(-amount, "withdraw", "", "");
 		entryList.add(entry);
-		balanceChanged();
+		notifyChanges(entry);
 	}
 
 	private void addEntry(AccountEntry entry) {
@@ -94,7 +89,6 @@ public class Account extends Observable {
 		
 		entryList.add(fromEntry);
 		toAccount.addEntry(toEntry);
-		balanceChanged();
 	}
 
 	public Customer getCustomer() {
@@ -109,9 +103,8 @@ public class Account extends Observable {
 		return entryList;
 	}
 
-	private void balanceChanged() {
-		this.addObserver(emailSender);
-		notifyAllObservers();
-		this.deleteObserver(emailSender);
+	private void notifyChanges(AccountEntry entry) {
+		setChanged();
+		notifyObservers(entry);
 	}
 }
