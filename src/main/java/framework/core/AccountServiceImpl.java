@@ -2,14 +2,6 @@ package framework.core;
 
 import ccard.CreditCardType;
 import banking.command.Command;
-import framework.decorator.P1;
-import framework.decorator.P2;
-import framework.decorator.P3;
-import framework.decorator.PromotionType;
-import framework.factory.DataFactory;
-import framework.factory.EnvironmentType;
-import framework.factory.ProductionDAO;
-import framework.factory.TestingDAO;
 import framework.strategy.InterestStrategy;
 
 import java.time.LocalDate;
@@ -19,21 +11,12 @@ import java.util.List;
 
 public class AccountServiceImpl implements AccountService {
 	private AccountDAO accountDAO;
-	private DataFactory dataFactory;
 	private List<Command> commands;
 	private int undoRedoPosition = -1;
 	private CustomerDAO customerDAO;
 
-	public AccountServiceImpl(EnvironmentType environmentType) {
-		switch (environmentType) {
-			case PRODUCTION:
-				this.dataFactory = new ProductionDAO();
-				break;
-			case TESTING:
-				this.dataFactory = new TestingDAO();
-				break;
-		}
-		this.accountDAO = this.dataFactory.createAccountDAO();
+	public AccountServiceImpl() {
+		this.accountDAO = new AccountDAOImpl();
 		this.commands = new ArrayList<>();
 		customerDAO = new CustomerDAOImpl();
 	}
@@ -152,23 +135,6 @@ public class AccountServiceImpl implements AccountService {
 		accounts.forEach(account ->{
 			account.addInterest();
 		});
-	}
-
-	// added new assignPromotion method
-	@Override
-	public void assignPromotion(String accountNumber, PromotionType promotionType) {
-		Account account = accountDAO.loadAccount(accountNumber);
-		switch (promotionType) {
-			case P1:
-				account.setAccountType(new P1(account.getAccountType()));
-				break;
-			case P2:
-				account.setAccountType(new P2(account.getAccountType()));
-				break;
-			case P3:
-				account.setAccountType(new P3(account.getAccountType()));
-				break;
-		}
 	}
 
 	public void addCommand(Command cmd){

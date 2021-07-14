@@ -2,9 +2,6 @@ package framework.core;
 
 import ccard.CreditCardStrategy;
 import ccard.CreditCardType;
-import framework.observer.EmailSender;
-import framework.observer.Logger;
-import framework.observer.SMSSender;
 import framework.strategy.InterestStrategy;
 
 import java.util.ArrayList;
@@ -19,10 +16,6 @@ public class Account extends Observable {
 	protected AccountClass accountClass;
 	protected CreditCardStrategy creditCardStrategy;
 	protected CreditCardType creditCardType;
-
-	// added code here for Lab02
-	protected Logger logger = new Logger();
-	protected SMSSender smsSender = new SMSSender();
 	protected EmailSender emailSender = new EmailSender();
 
 	public void notifyAllObservers() {
@@ -38,21 +31,20 @@ public class Account extends Observable {
 		this.accountType = accountType;
 	}
 
+	public AccountClass getAccountClass() {
+		return accountClass;
+	}
+
 	public void addInterest(){
 		double balance = getBalance();
 		double amount = accountType.calculateInterest(balance);
 		AccountEntry entry = new AccountEntry(amount, "interest", "", "");
-		entryList.add(entry);
-		measurementsChanged(false);
 	}
-	// end added
 
 	private List<AccountEntry> entryList = new ArrayList<AccountEntry>();
 
 	public Account(String accountNumber) {
 		this.accountNumber = accountNumber;
-		this.addObserver(emailSender);
-		measurementsChanged(true);
 	}
 
 	public Account(String accountNumber, InterestStrategy accountType, AccountClass accountClass) {
@@ -60,8 +52,6 @@ public class Account extends Observable {
 		this.accountType = accountType;
 		this.accountClass = accountClass;
 		this.creditCardStrategy = null;
-		this.addObserver(emailSender);
-		measurementsChanged(true);
 	}
 
 	public String getAccountNumber() {
@@ -83,13 +73,13 @@ public class Account extends Observable {
 	public void deposit(double amount) {
 		AccountEntry entry = new AccountEntry(amount, "deposit", "", "");
 		entryList.add(entry);
-		measurementsChanged(false);
+		balanceChanged();
 	}
 
 	public void withdraw(double amount) {
 		AccountEntry entry = new AccountEntry(-amount, "withdraw", "", "");
 		entryList.add(entry);
-		measurementsChanged(false);
+		balanceChanged();
 	}
 
 	private void addEntry(AccountEntry entry) {
@@ -104,7 +94,7 @@ public class Account extends Observable {
 		
 		entryList.add(fromEntry);
 		toAccount.addEntry(toEntry);
-		measurementsChanged(false);
+		balanceChanged();
 	}
 
 	public Customer getCustomer() {
@@ -119,20 +109,9 @@ public class Account extends Observable {
 		return entryList;
 	}
 
-	// Changed for balance then trigger logger and smsSender or creating account then trigger email
-	private void measurementsChanged(boolean isEmail) {
-		if (isEmail) {
-			this.addObserver(emailSender);
-		} else {
-			this.addObserver(smsSender);
-			this.addObserver(logger);
-		}
+	private void balanceChanged() {
+		this.addObserver(emailSender);
 		notifyAllObservers();
-		if (isEmail) {
-			this.deleteObserver(emailSender);
-		} else {
-			this.deleteObserver(smsSender);
-			this.deleteObserver(logger);
-		}
+		this.deleteObserver(emailSender);
 	}
 }

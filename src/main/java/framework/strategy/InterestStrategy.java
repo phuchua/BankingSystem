@@ -1,4 +1,4 @@
-package framework.oldfiles.strategy;
+package framework.strategy;
 
 public interface InterestStrategy {
     double calculateInterest(double balance);

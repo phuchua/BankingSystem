@@ -1,6 +1,4 @@
-package framework.oldfiles.observer;
-
-import framework.oldfiles.core.Account;
+package framework.core;
 
 import java.util.Observable;
 import java.util.Observer;

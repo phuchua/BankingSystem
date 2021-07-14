@@ -1,4 +1,4 @@
-package framework.oldfiles.strategy;
+package framework.strategy;
 
 public class CheckingsInterest implements InterestStrategy {
     public double calculateInterest(double balance) {

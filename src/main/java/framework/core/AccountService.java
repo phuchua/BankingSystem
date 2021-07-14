@@ -2,7 +2,6 @@ package framework.core;
 
 import ccard.CreditCardType;
 import banking.command.Command;
-import framework.decorator.PromotionType;
 import framework.strategy.InterestStrategy;
 
 import java.time.LocalDate;
@@ -25,9 +24,7 @@ public interface AccountService {
     void withdraw (String accountNumber, double amount);
     void transferFunds(String fromAccountNumber, String toAccountNumber, double amount, String description);
     void addInterest ();
-    void assignPromotion(String accountNumber, PromotionType promotionType);
 
-    // lab05
     void addCommand(Command cmd);
     public void updateUndoRedoPosition(int undoRedoPosition);
     public int getUndoRedoPosition();
