@@ -1,15 +1,15 @@
 package ui.common;
 
+import ui.bank.MainFrame;
+
 import javax.swing.*;
 
 public class JDialog_Deposit extends javax.swing.JDialog
 {
-    
-
-    private JFrame parentframe;
+    private MainFrame parentframe;
     private String accnr;
     
-	public JDialog_Deposit(JFrame parent, String aaccnr)
+	public JDialog_Deposit(MainFrame parent, String aaccnr)
 	{
 		super(parent);
 		parentframe=parent;
@@ -82,7 +82,7 @@ public class JDialog_Deposit extends javax.swing.JDialog
 
 	void JButtonOK_actionPerformed(java.awt.event.ActionEvent event)
 	{
-        //parentframe.amountDeposit=JTextField_Deposit.getText();
+        parentframe.setAmountDeposit(JTextField_Deposit.getText());
         dispose();
 	}
 
