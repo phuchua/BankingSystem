@@ -28,7 +28,6 @@ public class AccountServiceImpl implements AccountService {
 		account.setCustomer(customer);
 
 		accountDAO.saveAccount(account);
-		//account.addObserver(new EmailSender());
 
 		return account;
 	}
@@ -50,7 +49,6 @@ public class AccountServiceImpl implements AccountService {
 
 		accountDAO.saveAccount(account);
 		customerDAO.saveCustomer(customer);
-		//account.addObserver(new EmailSender());
 
 		return account;
 	}
@@ -71,7 +69,6 @@ public class AccountServiceImpl implements AccountService {
 
 		accountDAO.saveAccount(account);
 		customerDAO.saveCustomer(customer);
-		//account.addObserver(new EmailSender());
 
 		return account;
 	}
@@ -99,7 +96,7 @@ public class AccountServiceImpl implements AccountService {
 		account.setCustomer(customer);
 
 		accountDAO.saveAccount(account);
-		//account.addObserver(new EmailSender());
+
 		return account;
 	}
 
