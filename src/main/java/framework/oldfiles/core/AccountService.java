@@ -1,12 +1,22 @@
-package framework.oldfiles.core;
+package framework.core;
 
-import framework.oldfiles.command.Command;
-import framework.oldfiles.decorator.PromotionType;
-import framework.oldfiles.strategy.InterestStrategy;
+import ccard.CreditCardType;
+import banking.command.Command;
+import framework.decorator.PromotionType;
+import framework.strategy.InterestStrategy;
 
+import java.time.LocalDate;
 import java.util.Collection;
 
 public interface AccountService {
+    Account createAccount(String accountNumber, String customerName, InterestStrategy accountType, AccountClass accountClass,
+                          String customerStreet, String customerCity, String customerState, String customerZip , String customerEmail );
+    Account createPersonalAccount(String accountNumber, String customerName, InterestStrategy accountType, AccountClass accountClass,
+                                  String customerStreet, String customerCity, String customerState, String customerZip, String customerEmail, LocalDate birthdate);
+    Account createCompanyAccount(String accountNumber, String customerName, InterestStrategy accountType, AccountClass accountClass,
+                                 String customerStreet, String customerCity, String customerState, String customerZip, String customerEmail, int noOfEmployee);
+    Account createCreditCard(String ccNumber, String customerName, InterestStrategy accountType, AccountClass accountClass,
+                             String customerStreet, String customerCity, String customerState, String customerZip, String customerEmail, LocalDate expireDate, CreditCardType creditCardType);
     Account createAccount(String accountNumber, String customerName);
     Account createAccount(String accountNumber, String customerName, InterestStrategy accountType);
     Account getAccount(String accountNumber);
