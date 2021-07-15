@@ -1,9 +1,8 @@
 package ui.bank;
 
-import banking.controllers.AccountController;
-
 import common.enums.AccountType;
 import common.models.Account;
+import framework.Controller;
 import lombok.Getter;
 import ui.common.JDialog_Deposit;
 import ui.common.JDialog_Withdraw;
@@ -12,12 +11,12 @@ import javax.swing.*;
 import java.awt.event.ActionListener;
 
 @Getter
-public class BtnActions {
-    private AccountController accountController;
+public abstract class BtnActions {
+    private Controller controller;
     private MainFrame frame;
 
-    public BtnActions(AccountController accountController, MainFrame frame) {
-        this.accountController = accountController;
+    public BtnActions(Controller controller, MainFrame frame) {
+        this.controller = controller;
         this.frame = frame;
     }
 
@@ -28,21 +27,21 @@ public class BtnActions {
         String accNo = getSelectedAccountNo(selection);
         if (accNo != null) {
             openDialog(new JDialog_Deposit(frame, accNo), 430, 15, 275, 140);
-            double currentAmount = getCurrentBalance(accNo);
             double inpAmount = Double.parseDouble(frame.getAmountDeposit());
-            accountController.deposit(accNo, inpAmount);
-            frame.getDataTable().setValueAt(String.valueOf(currentAmount + inpAmount), selection, 5);
+            controller.deposit(accNo, inpAmount);
+            double newAmount = getCurrentBalance(accNo);
+            frame.getDataTable().setValueAt(String.valueOf(newAmount), selection, balanceColumn());
         }
     };
 
     private double getCurrentBalance(String accNo) {
-        Account account = accountController.getAccountById(accNo);
+        Account account = controller.getAccountById(accNo);
         return account.getBalance();
     }
 
     private String getSelectedAccountNo(int selection) {
         if (selection >= 0)
-            return (String) frame.getDataTable().getValueAt(selection, 0);
+            return (String) frame.getDataTable().getValueAt(selection, getAccountNoColumn());
         return null;
     }
 
@@ -51,12 +50,10 @@ public class BtnActions {
         if (selection >= 0) {
             String accNo = getSelectedAccountNo(selection);
             openDialog(new JDialog_Withdraw(frame, accNo), 430, 15, 275, 140);
-            double currentAmount = getCurrentBalance(accNo);
             long withdrawAmt = Long.parseLong(frame.getAmountDeposit());
-            double newAmount = currentAmount - withdrawAmt;
-            frame.getDataTable().setValueAt(String.valueOf(newAmount), selection, 5);
-            accountController.withdraw(accNo, withdrawAmt);
-
+            controller.withdraw(accNo, withdrawAmt);
+            double newAmount = getCurrentBalance(accNo);
+            frame.getDataTable().setValueAt(String.valueOf(newAmount), selection, balanceColumn());
             if (newAmount < 0) {
                 JOptionPane.showMessageDialog(frame, " Account " +
                                 accNo + " : balance is negative: $" + newAmount + " !",
@@ -65,11 +62,14 @@ public class BtnActions {
         }
     };
 
+    protected abstract int balanceColumn();
+    protected abstract int getAccountNoColumn();
+
     public final ActionListener applyInterest = event -> {
         JOptionPane.showMessageDialog(frame, "Add interest to all accounts",
                 "Add interest to all accounts", JOptionPane.WARNING_MESSAGE);
-        accountController.addInterest();
-        frame.updateAllTableRec(accountController.getAllAccounts());
+        controller.addInterest();
+        frame.updateAllTableRec(controller.getAllAccounts());
     };
 
     public void openDialog(JDialog jDialog) {

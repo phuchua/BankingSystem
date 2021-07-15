@@ -14,14 +14,14 @@ import java.time.LocalDate;
 import java.util.Collection;
 import java.util.UUID;
 
-public class CreditAccountController implements Controller {
+public class CreditAccountController extends Controller {
     CreditCardAccountServiceImpl accountService;
 
     public CreditAccountController() {
         accountService = new CreditCardAccountServiceImpl();
     }
 
-    public Account createAccount(String name, String street, String city, String state, String zip, String email, LocalDate dob, AccountType accountType, CreditCardType cardType) {
+    public Account createAccount(String cc, String name, String street, String city, String state, String zip, String email, LocalDate dob, AccountType accountType, CreditCardType cardType) {
         UUID uuid = UUID.randomUUID();
         Customer person = new Person(uuid.toString(), name, street, city, state, zip, email, dob);
         uuid = UUID.randomUUID();

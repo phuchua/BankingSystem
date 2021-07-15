@@ -18,7 +18,7 @@ public class BankBtnActions extends BtnActions {
     public final ActionListener addPersonalAccount = event -> {
         openDialog(new JDialog_AddPAcc(bankFrm));
         if (bankFrm.isNewAccount()) {
-            Account account = getAccountController().createPersonalAccount(bankFrm.getAccountNo(),
+            Account account = getController().createPersonalAccount(bankFrm.getAccountNo(),
                     bankFrm.getClientName(), bankFrm.getStateAddress(), bankFrm.getCity(), bankFrm.getStateAddress(),
                     bankFrm.getZip(), bankFrm.getCustomerEmail(), LocalDate.parse(bankFrm.getBirthDate()), getAccType(bankFrm.getAccountType()));
 
@@ -28,8 +28,18 @@ public class BankBtnActions extends BtnActions {
 
     public ActionListener addBusinessAccount = event -> {
         openDialog(new JDialog_AddCompAcc(bankFrm));
-        Account account = getAccountController().createCompanyAccount(bankFrm.getAccountNo(), bankFrm.getClientName(), bankFrm.getStateAddress(), bankFrm.getCity(), bankFrm.getStateAddress(),
+        Account account = getController().createCompanyAccount(bankFrm.getAccountNo(), bankFrm.getClientName(), bankFrm.getStateAddress(), bankFrm.getCity(), bankFrm.getStateAddress(),
                 bankFrm.getZip(), bankFrm.getCustomerEmail(), Integer.parseInt(bankFrm.getNoOfEmployees()), getAccType(bankFrm.getAccountType()));
         bankFrm.updateTable(account);
     };
+
+    @Override
+    protected int balanceColumn() {
+        return 5;
+    }
+
+    @Override
+    protected int getAccountNoColumn() {
+        return 0;
+    }
 }

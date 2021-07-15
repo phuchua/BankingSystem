@@ -15,7 +15,6 @@ import java.util.Collection;
 @Getter
 public class BankFrm extends MainFrame {
     private BankBtnActions btnActions;
-    private AccountController accountController;
     private String birthDate;
     private String noOfEmployees;
 
@@ -23,7 +22,6 @@ public class BankFrm extends MainFrame {
         setFrame(this);
         setBtnActions(new BankBtnActions(new AccountController(), this));
         overview("Bank Application.", Arrays.asList("AccountNr", "Name", "City", "P/C", "Ch/S", "Amount"), getButtons());
-        accountController = new AccountController();
     }
 
     public static void main(String args[]) {

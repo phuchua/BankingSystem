@@ -1,22 +1,26 @@
 package banking.controllers;
 
-import common.enums.AccountType;
-import common.models.*;
-import common.services.AccountService;
 import banking.services.AccountServiceImpl;
+import common.enums.AccountType;
+import common.models.Account;
+import common.models.Company;
+import common.models.Customer;
+import common.models.Person;
+import common.services.AccountService;
 import framework.Controller;
 
 import java.time.LocalDate;
 import java.util.Collection;
-import java.util.Date;
 import java.util.UUID;
 
-public class AccountController implements Controller {
+public class AccountController extends Controller {
     AccountService accountService;
 
     public AccountController(){
         accountService = new AccountServiceImpl();
     }
+
+
 
     public Account createPersonalAccount(String accountNumber, String name, String street, String city, String state, String zip, String email, LocalDate dob, AccountType accountType){
        UUID uuid = UUID.randomUUID();
