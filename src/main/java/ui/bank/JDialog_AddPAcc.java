@@ -15,14 +15,7 @@ public class JDialog_AddPAcc extends AccountDialog {
     @Override
     protected void setUniqueFields() {
         JTextField_BD = new JTextField();
-        JRadioButton_Chk.setText("Checkings");
-        JRadioButton_Chk.setActionCommand("Checkings");
-        getContentPane().add(JRadioButton_Chk);
-        JRadioButton_Chk.setBounds(36, 0, 84, 24);
-        JRadioButton_Sav.setText("Savings");
-        JRadioButton_Sav.setActionCommand("Savings");
-        getContentPane().add(JRadioButton_Sav);
-        JRadioButton_Sav.setBounds(36, 24, 84, 24);
+        displayAccountOptions();
         getContentPane().add(JTextField_ACNR);
         JTextField_ACNR.setBounds(84, 228, 156, 20);
         JLabel8.setText("Acc Nr");
