@@ -1,16 +1,19 @@
 package framework;
 
-import banking.Customer;
+
 import framework.Observer.Observable;
 import framework.Observer.Observer;
 import framework.Storage.Storable;
-import framework.Storage.Storage;
-
 import java.util.*;
 
 
 public abstract class EntityRepository<O extends Storable<K>,K> implements Observable<RepositoryEvents,O> {
     DAO<O,K> dao;
+    Map<EventType, Set<Observer>> observersList = new HashMap<>();
+
+    public Map<EventType, Set<Observer>> getObserversList(){
+        return observersList;
+    }
 
     public EntityRepository(){
         this.dao = getDao();
@@ -50,5 +53,6 @@ public abstract class EntityRepository<O extends Storable<K>,K> implements Obser
     public final Collection<O> getAll(){
         return this.dao.getAll();
     }
+
 }
 

@@ -10,6 +10,6 @@ public class SmsNotification implements Notification {
 
     @Override
     public void send() {
-        System.out.println("Sending SMS");
+        System.out.println("Send Sending to "+message.getTo() +" Message: "+message.getBody());
     }
 }
