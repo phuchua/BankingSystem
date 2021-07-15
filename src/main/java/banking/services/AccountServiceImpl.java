@@ -24,7 +24,7 @@ public class AccountServiceImpl implements AccountService {
 
 	public AccountServiceImpl(){
 		accountRepository = new AccountRepository();
-		accountRepository.addObserver(new Accountgit UpdateObserver(),RepositoryEvents.POST_UPDATE);
+		accountRepository.addObserver(new AccountUpdateObserver(),RepositoryEvents.POST_UPDATE);
 		customerRepository = new CustomerRepository();
 		accountEntryRepository = new AccountEntryRepository();
 		accountEntryRepository.addObserver(new AccountEntryObserver(),RepositoryEvents.POST_SAVE);
