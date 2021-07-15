@@ -1,6 +1,7 @@
 package ccard.services;
 
 
+import ccard.models.CreditCard;
 import ccard.strategy.GoldCCInterestStrategy;
 import common.models.Account;
 import common.models.AccountEntry;
@@ -13,16 +14,19 @@ import common.repositories.CustomerRepository;
 import common.services.AccountService;
 import framework.RepositoryEvents;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 
-public class AccountServiceImpl implements AccountService {
+public class CreditCardAccountServiceImpl implements AccountService {
 
 	AccountRepository accountRepository;
 	CustomerRepository customerRepository;
 	AccountEntryRepository accountEntryRepository;
 
-	public AccountServiceImpl(){
+	public CreditCardAccountServiceImpl(){
 		accountRepository = new AccountRepository();
 		accountRepository.addObserver(new AccountUpdateObserver(),RepositoryEvents.POST_UPDATE);
 		customerRepository = new CustomerRepository();
@@ -51,7 +55,7 @@ public class AccountServiceImpl implements AccountService {
 			throw new IllegalArgumentException();
 		}
 
-		AccountEntry entry = new AccountEntry(amount, "Deposit", accountNumber, "");
+		AccountEntry entry = new AccountEntry(-amount, "Deposit", accountNumber, "");
 		entry.setAccount(account);
 		accountEntryRepository.save(entry);
 		account.addEntry(entry);
@@ -65,7 +69,7 @@ public class AccountServiceImpl implements AccountService {
 			throw new IllegalArgumentException();
 		}
 
-		AccountEntry entry = new AccountEntry(-amount, "Withdraw", accountNumber, "");
+		AccountEntry entry = new AccountEntry(amount, "Withdraw", accountNumber, "");
 		entry.setAccount(account);
 		accountEntryRepository.save(entry);
 		account.addEntry(entry);
@@ -90,4 +94,22 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 
+	public double getMinimumPayment(String accountNumber) {
+		CreditCard account = (CreditCard) accountRepository.loadOne(accountNumber);
+		double balance = account.getBalance();
+
+		// the user doesn't have to pay
+		if(balance < 0){
+			return 0;
+		}
+		return account.getMinPaymentStrategy().calculateInterest(balance);
+	}
+
+	public Collection<AccountEntry> getMonthlyBilling(String accountNumber) {
+		CreditCard account = (CreditCard) accountRepository.loadOne(accountNumber);
+		LocalDate lastMonth = LocalDate.now().minusMonths(1);
+		return account.getEntryList().stream().filter(accountEntry ->
+				Period.between(accountEntry.getDate(), lastMonth).getDays() <= 30)
+				.collect(Collectors.toList());
+	}
 }

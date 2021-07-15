@@ -1,9 +1,16 @@
 package ui.bank;
 
+<<<<<<< HEAD
 import banking.controllers.AccountController;
 import common.models.Account;
 import lombok.Getter;
 import lombok.Setter;
+=======
+import banking.services.AccountServiceImpl;
+
+import common.services.AccountService;
+import lombok.*;
+>>>>>>> 06df9f54aeb380d619adb798243686c924c94a14
 
 import javax.swing.*;
 import java.awt.event.WindowAdapter;
@@ -23,7 +30,12 @@ public class BankFrm extends MainFrame {
         setFrame(this);
         setBtnActions(new BankBtnActions(new AccountController(), this));
         overview("Bank Application.", Arrays.asList("AccountNr", "Name", "City", "P/C", "Ch/S", "Amount"), getButtons());
+<<<<<<< HEAD
         accountController = new AccountController();
+=======
+
+//        accountService = new AccountServiceImpl(EnvironmentType.DEVELOPMENT);
+>>>>>>> 06df9f54aeb380d619adb798243686c924c94a14
     }
 
     public static void main(String args[]) {
