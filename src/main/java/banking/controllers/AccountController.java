@@ -13,14 +13,12 @@ import java.time.LocalDate;
 import java.util.Collection;
 import java.util.UUID;
 
-public class AccountController implements IAccountController {
+public class AccountController extends Controller {
     AccountService accountService;
 
     public AccountController(){
-        accountService = new AccountServiceImpl();
+        accountService = AccountServiceImpl.getInstance();
     }
-
-
 
     public Account createPersonalAccount(String accountNumber, String name, String street, String city, String state, String zip, String email, LocalDate dob, AccountType accountType){
        UUID uuid = UUID.randomUUID();

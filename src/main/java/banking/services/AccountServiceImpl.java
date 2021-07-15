@@ -22,6 +22,16 @@ public class AccountServiceImpl implements AccountService {
 	CustomerRepository customerRepository;
 	AccountEntryRepository accountEntryRepository;
 
+	// Singleton instance
+	private static AccountServiceImpl instance;
+
+	public static AccountServiceImpl getInstance() {
+		if (instance == null) {
+			instance = new AccountServiceImpl();
+		}
+		return instance;
+	}
+
 	public AccountServiceImpl(){
 		accountRepository = new AccountRepository();
 		accountRepository.addObserver(new AccountUpdateObserver(),RepositoryEvents.POST_UPDATE);
