@@ -8,7 +8,7 @@ import framework.Components.Notification.Email.EmailNotification;
 public class CompanyTransactionStrategy implements TransactionStrategy {
     @Override
     public void checkForAlert(AccountEntry accountEntry) {
-        EmailMessage message = new EmailMessage(accountEntry.getAccount().getCustomer().getEmail(),"Account Transaction","Account Transaction on account#: "+accountEntry.getAccount().getId());
+        EmailMessage message = new EmailMessage(accountEntry.getAccount().getCustomer().getEmail(),"Company Account Transaction","Company Account >> Deposit on account#: " + accountEntry.getAccount().getId() + ", amount: " + accountEntry.getAmount());
         (new EmailNotification(message)).send();
     }
 }
