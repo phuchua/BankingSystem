@@ -1,6 +1,8 @@
 package common.models;
 
 import framework.Storage.Storable;
+
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
 
@@ -10,7 +12,7 @@ import lombok.Data;
 public  class AccountEntry implements Storable<String> {
 
     private String id;
-    private Date date;
+    private LocalDate date;
     private double amount;
     private String description;
     private String fromAccountNumber;
@@ -21,7 +23,7 @@ public  class AccountEntry implements Storable<String> {
     public AccountEntry(double amount, String description, String fromAccountNumber, String fromPersonName) {
         super();
         this.id = UUID.randomUUID().toString();
-        this.date = new Date();
+        this.date = LocalDate.now();
         this.amount = amount;
         this.description = description;
         this.fromAccountNumber = fromAccountNumber;

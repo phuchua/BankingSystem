@@ -9,8 +9,8 @@ import common.models.Person;
 import common.services.AccountService;
 import framework.Controller;
 
+import java.time.LocalDate;
 import java.util.Collection;
-import java.util.Date;
 import java.util.UUID;
 
 public class AccountController implements Controller {
@@ -20,7 +20,7 @@ public class AccountController implements Controller {
         accountService = new AccountServiceImpl();
     }
 
-    public Account createPersonalAccount(String name, String street, String city, String state, String zip, String email, Date dob, AccountType accountType){
+    public Account createPersonalAccount(String name, String street, String city, String state, String zip, String email, LocalDate dob, AccountType accountType){
         UUID uuid = UUID.randomUUID();
         Customer person = new Person(uuid.toString(),name,street,city,state,zip,email,dob);
         uuid = UUID.randomUUID();
