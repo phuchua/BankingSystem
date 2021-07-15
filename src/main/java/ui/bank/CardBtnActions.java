@@ -1,6 +1,6 @@
 package ui.bank;
 
-import framework.core.AccountService;
+import common.services.AccountService;
 import ui.ccard.CardFrm;
 import ui.ccard.JDialogGenBill;
 import ui.ccard.JDialog_AddCCAccount;

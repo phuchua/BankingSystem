@@ -1,6 +1,7 @@
 package ccard.services;
 
 
+import ccard.models.CreditCard;
 import ccard.strategy.GoldCCInterestStrategy;
 import common.models.Account;
 import common.models.AccountEntry;
@@ -16,13 +17,13 @@ import framework.RepositoryEvents;
 import java.util.Collection;
 
 
-public class AccountServiceImpl implements AccountService {
+public class CreditCardAccountServiceImpl implements AccountService {
 
 	AccountRepository accountRepository;
 	CustomerRepository customerRepository;
 	AccountEntryRepository accountEntryRepository;
 
-	public AccountServiceImpl(){
+	public CreditCardAccountServiceImpl(){
 		accountRepository = new AccountRepository();
 		accountRepository.addObserver(new AccountUpdateObserver(),RepositoryEvents.POST_UPDATE);
 		customerRepository = new CustomerRepository();
@@ -51,7 +52,7 @@ public class AccountServiceImpl implements AccountService {
 			throw new IllegalArgumentException();
 		}
 
-		AccountEntry entry = new AccountEntry(amount, "Deposit", accountNumber, "");
+		AccountEntry entry = new AccountEntry(-amount, "Deposit", accountNumber, "");
 		entry.setAccount(account);
 		accountEntryRepository.save(entry);
 		account.addEntry(entry);
@@ -65,7 +66,7 @@ public class AccountServiceImpl implements AccountService {
 			throw new IllegalArgumentException();
 		}
 
-		AccountEntry entry = new AccountEntry(-amount, "Withdraw", accountNumber, "");
+		AccountEntry entry = new AccountEntry(amount, "Withdraw", accountNumber, "");
 		entry.setAccount(account);
 		accountEntryRepository.save(entry);
 		account.addEntry(entry);
@@ -90,4 +91,14 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 
+	public double getMinimumPayment(String accountNumber) {
+		CreditCard account = (CreditCard) accountRepository.loadOne(accountNumber);
+		double balance = account.getBalance();
+
+		// the user doesn't have to pay
+		if(balance < 0){
+			return 0;
+		}
+		return account.getMinPaymentStrategy().calculateInterest(balance);
+	}
 }

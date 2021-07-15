@@ -1,7 +1,8 @@
 package ui.bank;
 
-import framework.core.*;
-import framework.factory.EnvironmentType;
+import banking.services.AccountServiceImpl;
+
+import common.services.AccountService;
 import lombok.*;
 
 import javax.swing.*;
@@ -21,7 +22,7 @@ public class BankFrm extends MainFrame {
         setBtnActions(new BankBtnActions(null, this));
         overview("Bank Application.", Arrays.asList("AccountNr", "Name", "City", "P/C", "Ch/S", "Amount"), getButtons());
 
-        accountService = new AccountServiceImpl(EnvironmentType.DEVELOPMENT);
+//        accountService = new AccountServiceImpl(EnvironmentType.DEVELOPMENT);
     }
 
     public static void main(String args[]) {

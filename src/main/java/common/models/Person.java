@@ -3,12 +3,13 @@ package common.models;
 import common.enums.CustomerType;
 import banking.strategy.PersonBalanceAlertStrategy;
 import banking.strategy.PersonTransactionStrategy;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.Date;
 
-@Data
 public class Person extends Customer {
     private LocalDate dob;
 

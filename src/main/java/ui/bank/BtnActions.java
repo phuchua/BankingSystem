@@ -1,18 +1,13 @@
 package ui.bank;
 
-import framework.core.AccountClass;
-import framework.core.AccountService;
-import framework.strategy.CheckingsInterest;
-import framework.strategy.CreditCardInterest;
-import framework.strategy.InterestStrategy;
-import framework.strategy.SavingsInterest;
+
+import common.services.AccountService;
+import common.strategy.InterestStrategy;
 import ui.common.JDialog_Deposit;
 import ui.common.JDialog_Withdraw;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
-
-import static framework.core.AccountClass.*;
 
 public class BtnActions {
     private AccountService accountService;
@@ -66,7 +61,7 @@ public class BtnActions {
         jDialog.setBounds(x, y, width, height);
         jDialog.show();
     }
-
+/*
     private InterestStrategy getAccStrategy(String accountType) {
         InterestStrategy strategy = null;
         switch (accountType) {
@@ -87,5 +82,5 @@ public class BtnActions {
             default: break;
         }
         return type;
-    }
+    }*/
 }

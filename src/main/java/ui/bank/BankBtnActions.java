@@ -1,7 +1,8 @@
 package ui.bank;
 
 
-import framework.core.AccountService;
+
+import common.services.AccountService;
 
 import java.awt.event.ActionListener;
 
