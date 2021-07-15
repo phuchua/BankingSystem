@@ -3,7 +3,6 @@ package ui.bank;
 import banking.controllers.IAccountController;
 import common.enums.AccountType;
 import common.models.Account;
-import framework.Controller;
 import lombok.Getter;
 import ui.common.JDialog_Deposit;
 import ui.common.JDialog_Withdraw;

@@ -17,7 +17,6 @@ public class CreditCardApplication {
         LocalDate dob = LocalDate.now();
         Account creditAccount = creditAccountController.createAccount("","Salah", "street", "City", "IA", "52556", "salah.khudairat@gmail.com", dob, AccountType.CREDIT, CreditCardType.GOLD);
 
-
         creditAccountController.deposit(creditAccount.getId(), 100);
         creditAccountController.deposit(creditAccount.getId(), 500);
         creditAccountController.withdraw(creditAccount.getId(), 1000);

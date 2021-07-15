@@ -1,5 +1,6 @@
 package ui.bank;
 
+import banking.controllers.IAccountController;
 import ccard.enums.CreditCardType;
 import common.models.Account;
 import framework.Controller;
@@ -12,7 +13,7 @@ import java.time.LocalDate;
 
 public class CardBtnActions extends BtnActions {
     private CardFrm cardFrm;
-    public CardBtnActions(Controller controller, CardFrm cardFrm) {
+    public CardBtnActions(IAccountController controller, CardFrm cardFrm) {
         super(controller, cardFrm);
         this.cardFrm = cardFrm;
     }
