@@ -5,7 +5,7 @@ import banking.command.DepositCommand;
 import banking.command.TransferFundsCommand;
 import banking.command.WithdrawCommand;
 import framework.core.*;
-import framework.factory.EnvironmentType;
+import framework.core.Customer;
 import framework.strategy.CheckingsInterest;
 import framework.strategy.SavingsInterest;
 import java.time.LocalDate;
@@ -13,57 +13,59 @@ import java.time.LocalDate;
 public class Application {
 
 	public static void main(String[] args) {
-		AccountService accountService = new AccountServiceImpl(EnvironmentType.PRODUCTION);
 
-		// add Personal account of Checking and Savings
-		accountService.createPersonalAccount("1263862", "Personal Checking",
-				new CheckingsInterest(), AccountClass.PERSONAL, "75 Pioneer Ranch",
-				"Las Vegas", "Nevada", "98113",
-				"frank@gmail.com", LocalDate.of(1985, 10, 5));
-		accountService.createPersonalAccount("1234567", "Personal Savings",
-				new SavingsInterest(), AccountClass.PERSONAL, "75 Pioneer Ranch",
-				"Las Vegas", "Nevada", "98113",
-				"frank@gmail.com", LocalDate.of(1985, 10, 5));
-		accountService.createCompanyAccount("4253892", "Company Checking",
-				new CheckingsInterest(), AccountClass.COMPANY, "80 Alexander Ave",
-				"Iowa", "Nevada", "98113",
-				"frank@gmail.com", 100);
-		accountService.createCompanyAccount("7654321", "Company Savings",
-				new SavingsInterest(), AccountClass.COMPANY, "80 Alexander Ave",
-				"Iowa", "Nevada", "98113",
-				"frank@gmail.com", 100);
+		AccountService accountService = new AccountServiceImpl();
 
+		// add Personal account of Checking
+		accountService.createPersonalAccount("1111111", "Personal Checking",
+				new CheckingsInterest(), AccountClass.PERSONAL, "11 Pioneer Ranch",
+				"Las Vegas", "Nevada", "98113",
+				"customer1@gmail.com", LocalDate.of(1985, 10, 5));
+
+		// add Personal account of Savings
+		accountService.createPersonalAccount("2222222", "Personal Savings",
+				new SavingsInterest(), AccountClass.PERSONAL, "22 Burlington",
+				"Fairfield", "Iowa", "52556",
+				"customer2@gmail.com", LocalDate.of(1985, 10, 5));
+
+		// add Company account of Checking
+		accountService.createCompanyAccount("3333333", "Company Checking",
+				new CheckingsInterest(), AccountClass.COMPANY, "33 N 4th St",
+				"Ottumwa", "Iowa", "52559",
+				"customer3@gmail.com", 100);
+
+		// add Company account of Savings
+		accountService.createCompanyAccount("4444444", "Company Savings",
+				new SavingsInterest(), AccountClass.COMPANY, "44 Martin Ave",
+				"Des Moines", "Iowa", "52558",
+				"customer4@gmail.com", 100);
 
 		//accountService.createCreditCard("8473-8478-4829-8847", "Credit Card 1", AccountType, AccountClass.CREDITCARD,street,city,state,zip,email,expDate, creditCardType);
 
-		// use account 1;
-		//accountService.deposit("1263862", 240);
-		//accountService.deposit("1263862", 529);
-		//accountService.withdraw("1263862", 230);
-		Command depositCommand = new DepositCommand(accountService, "1263862", 240);
+		// use account 1
+		Command depositCommand = new DepositCommand(accountService, "1111111", 1000);
 		depositCommand.execute();
-		//depositCommand = new DepositCommand(accountService, "1263862", 529);
-		//depositCommand.execute();
+		depositCommand = new DepositCommand(accountService, "1111111", 200);
+		depositCommand.execute();
 		//depositCommand.undo();
 		//depositCommand.redo();
-		Command withdrawCommand = new WithdrawCommand(accountService, "1263862", 230);
+		Command withdrawCommand = new WithdrawCommand(accountService, "1111111", 300);
 		withdrawCommand.execute();
 
-		// use account 2;
-		//accountService.deposit("4253892", 12450);
-		//accountService.transferFunds("4253892", "1263862", 100, "payment of invoice 10232");
-		depositCommand = new DepositCommand(accountService, "4253892", 10000);
+		// use account 2
+		depositCommand = new DepositCommand(accountService, "2222222", 2000);
 		depositCommand.execute();
-		Command transferFundsCommand = new TransferFundsCommand(accountService, "4253892", "1263862", 500, "payment of invoice 10232");
-		transferFundsCommand.execute();
-		//transferFundsCommand = new TransferFundsCommand(accountService, "4253892", "1263862", 200, "payment of invoice 22222");
+		//Command transferFundsCommand = new TransferFundsCommand(accountService, "2222222", "1111111", 700, "payment of invoice 100001");
 		//transferFundsCommand.execute();
 		//transferFundsCommand.undo();
 
-		// assign promotion
-		//accountService.assignPromotion("1263862", PromotionType.P1);
-		//accountService.assignPromotion("1263862", PromotionType.P2);
-		//accountService.assignPromotion("4253892", PromotionType.P3);
+		// use account 3
+		depositCommand = new DepositCommand(accountService, "3333333", 300);
+		depositCommand.execute();
+
+		// use account 4
+		depositCommand = new DepositCommand(accountService, "4444444", 400);
+		depositCommand.execute();
 
 		// calculate interest
 		accountService.addInterest();
@@ -74,7 +76,24 @@ public class Application {
 			System.out.println("Statement for Account: " + account.getAccountNumber());
 			System.out.println("Account Holder: " + customer.getName());
 			System.out.println("Account Type: " + account.getAccountType().getClass());
-			
+
+			System.out.println("-AccountNbr-----"
+					+ "-Name---------------"
+					+ "-City-----"
+					+ "-P/C-----"
+					+ "-Ch/S-------------------------------------"
+					+ "-Amount------");
+
+			System.out.printf("%15s%20s %5s%10s%45s%10s\n",
+					account.getAccountNumber(),
+					customer.getName(),
+					customer.getCity(),
+					account.getAccountClass(),
+					account.getAccountType().getClass(),
+					account.getBalance());
+
+			System.out.println("-------------------------------------------------------" + "-------------------------------------------------------");
+
 			System.out.println("-Date-------------------------" 
 					+ "-Description------------------" 
 					+ "-Amount-------------");
