@@ -5,13 +5,14 @@ import ccard.controllers.AccountController;
 import common.enums.AccountType;
 import common.models.Account;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Application {
 
 	public static void main(String[] args) {
 		AccountController accountController = new AccountController();
-		Date dob = new Date();
+		LocalDate dob = LocalDate.now();
 		Account pAccount  = accountController.createPersonalAccount("Salah","street","City","IA","52556","salah.khudairat@gmail.com",dob, AccountType.CHECKING);
 		accountController.deposit(pAccount.getId(),100);
 		accountController.deposit(pAccount.getId(),500);
