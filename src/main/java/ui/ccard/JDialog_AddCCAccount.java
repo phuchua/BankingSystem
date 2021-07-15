@@ -61,14 +61,14 @@ public class JDialog_AddCCAccount extends AccountDialog {
         JTextField_CCNR.setBounds(84, 252, 156, 20);
         getContentPane().add(JTextField_ExpDate);
         JTextField_ExpDate.setBounds(84, 276, 156, 20);
-        JButton_OK.setText("OK");
-        JButton_OK.setActionCommand("OK");
-        getContentPane().add(JButton_OK);
-        JButton_OK.setBounds(48, 312, 84, 24);
-        JButton_Cancel.setText("Cancel");
-        JButton_Cancel.setActionCommand("Cancel");
-        getContentPane().add(JButton_Cancel);
-        JButton_Cancel.setBounds(156, 312, 84, 24);
+//        JButton_OK.setText("OK");
+//        JButton_OK.setActionCommand("OK");
+//        getContentPane().add(JButton_OK);
+//        JButton_OK.setBounds(48, 312, 84, 24);
+//        JButton_Cancel.setText("Cancel");
+//        JButton_Cancel.setActionCommand("Cancel");
+//        getContentPane().add(JButton_Cancel);
+//        JButton_Cancel.setBounds(156, 312, 84, 24);
         JRadioButton_Bronze.setText("Bronze");
         JRadioButton_Bronze.setActionCommand("Savings");
         getContentPane().add(JRadioButton_Bronze);
@@ -101,8 +101,6 @@ public class JDialog_AddCCAccount extends AccountDialog {
     JTextField JTextField_ZIP = new JTextField();
     JTextField JTextField_CCNR = new JTextField();
     JTextField JTextField_ExpDate = new JTextField();
-    JButton JButton_OK = new JButton();
-    JButton JButton_Cancel = new JButton();
 
     JLabel JLabel7 = new JLabel();
     JTextField JTextField_Email = new JTextField();
