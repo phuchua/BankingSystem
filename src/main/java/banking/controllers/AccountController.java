@@ -11,12 +11,11 @@ import java.util.Date;
 import java.util.UUID;
 
 public class AccountController implements Controller {
+    AccountService accountService;
 
     public AccountController(){
         accountService = new AccountServiceImpl();
     }
-
-    AccountService accountService;
 
     public Account createPersonalAccount(String name, String street, String city, String state, String zip, String email, Date dob, AccountType accountType){
         UUID uuid = UUID.randomUUID();
