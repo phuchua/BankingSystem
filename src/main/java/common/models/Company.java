@@ -1,10 +1,9 @@
 package common.models;
 
 import common.enums.CustomerType;
-import common.strategy.CompanyBalanceAlertStrategy;
-import common.strategy.CompanyTransactionStrategy;
+import banking.strategy.CompanyBalanceAlertStrategy;
+import banking.strategy.CompanyTransactionStrategy;
 import lombok.Data;
-import java.util.Date;
 
 @Data
 public class Company extends Customer {

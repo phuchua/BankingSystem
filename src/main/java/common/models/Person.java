@@ -1,8 +1,8 @@
 package common.models;
 
 import common.enums.CustomerType;
-import common.strategy.PersonBalanceAlertStrategy;
-import common.strategy.PersonTransactionStrategy;
+import banking.strategy.PersonBalanceAlertStrategy;
+import banking.strategy.PersonTransactionStrategy;
 import lombok.Data;
 import java.util.Date;
 

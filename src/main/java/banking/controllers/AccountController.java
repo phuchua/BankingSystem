@@ -3,7 +3,7 @@ package banking.controllers;
 import common.enums.AccountType;
 import common.models.*;
 import common.services.AccountService;
-import common.services.AccountServiceImpl;
+import banking.services.AccountServiceImpl;
 import framework.Controller;
 
 import java.util.Collection;
@@ -49,5 +49,9 @@ public class AccountController implements Controller {
 
     public Account getAccountById(String accountId) {
         return accountService.getAccountById(accountId);
+    }
+
+    public void addInterest(){
+        accountService.setInterest();
     }
 }

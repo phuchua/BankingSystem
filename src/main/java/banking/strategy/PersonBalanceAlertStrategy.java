@@ -1,6 +1,7 @@
-package common.strategy;
+package banking.strategy;
 
 import common.models.Account;
+import common.strategy.BalanceAlertStrategy;
 import framework.Components.Notification.Email.EmailMessage;
 import framework.Components.Notification.Email.EmailNotification;
 

@@ -1,6 +1,7 @@
-package common.services;
+package banking.services;
 
 
+import banking.strategy.BasicAccountInterestStrategy;
 import common.models.Account;
 import common.models.AccountEntry;
 import common.models.Customer;
@@ -9,6 +10,7 @@ import common.observers.AccountUpdateObserver;
 import common.repositories.AccountEntryRepository;
 import common.repositories.AccountRepository;
 import common.repositories.CustomerRepository;
+import common.services.AccountService;
 import framework.RepositoryEvents;
 
 import java.util.Collection;
@@ -37,6 +39,7 @@ public class AccountServiceImpl implements AccountService {
 			customer = dbCustomer;
 		}
 		account.setCustomer(customer);
+		account.setInterestStrategy(new BasicAccountInterestStrategy());
 		accountRepository.save(account);
 		return account;
 	}
@@ -77,6 +80,13 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	public Account getAccountById(String accountId) {
 		return this.accountRepository.loadOne(accountId);
+	}
+
+	@Override
+	public void setInterest() {
+		for(Account account: this.accountRepository.getAll()){
+			//this.deposit();
+		}
 	}
 
 
