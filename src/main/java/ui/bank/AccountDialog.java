@@ -57,7 +57,6 @@ public abstract class AccountDialog extends JDialog {
         getContentPane().add(JTextField_STR);
         JTextField_STR.setBounds(84, 84, 156, 20);
 
-
         JLabel3.setText("City");
         getContentPane().add(JLabel3);
         JLabel3.setForeground(java.awt.Color.black);
@@ -131,5 +130,16 @@ public abstract class AccountDialog extends JDialog {
             parentFrame.setAccountType("Ch");
         else
             parentFrame.setAccountType("S");
+    }
+
+    protected void displayAccountOptions() {
+        JRadioButton_Chk.setText("Checkings");
+        JRadioButton_Chk.setActionCommand("Checkings");
+        getContentPane().add(JRadioButton_Chk);
+        JRadioButton_Chk.setBounds(16, 22, 120, 24);
+        JRadioButton_Sav.setText("Savings");
+        JRadioButton_Sav.setActionCommand("Savings");
+        getContentPane().add(JRadioButton_Sav);
+        JRadioButton_Sav.setBounds(144, 22, 84, 24);
     }
 }

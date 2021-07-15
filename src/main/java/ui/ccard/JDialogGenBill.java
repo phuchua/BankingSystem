@@ -9,8 +9,7 @@ import ui.bank.AccountDialog;
 import javax.swing.*;
 import java.util.Collection;
 
-public class JDialogGenBill extends AccountDialog
-{
+public class JDialogGenBill extends AccountDialog {
 	JScrollPane JScrollPane1 = new javax.swing.JScrollPane();
     String billString;
 	Collection<AccountEntry> accountEntries;

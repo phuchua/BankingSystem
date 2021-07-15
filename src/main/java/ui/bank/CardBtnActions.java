@@ -3,7 +3,6 @@ package ui.bank;
 import banking.controllers.IAccountController;
 import ccard.enums.CreditCardType;
 import common.models.Account;
-import framework.Controller;
 import ui.ccard.CardFrm;
 import ui.ccard.JDialogGenBill;
 import ui.ccard.JDialog_AddCCAccount;
@@ -38,7 +37,7 @@ public class CardBtnActions extends BtnActions {
     };
 
     private CreditCardType getCCType(String accountType) {
-        CreditCardType type = null;
+        CreditCardType type;
         switch (accountType) {
             case "Gold":
                 type = CreditCardType.GOLD;
@@ -46,11 +45,8 @@ public class CardBtnActions extends BtnActions {
             case "Silver":
                 type = CreditCardType.SILVER;
                 break;
-            case "Bronze":
-                type = CreditCardType.BRONZE;
-                break;
             default:
-                break;
+                type = CreditCardType.BRONZE;
         }
         return type;
     }
