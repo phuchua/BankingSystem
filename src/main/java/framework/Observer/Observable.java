@@ -1,8 +1,9 @@
-package framework.observer;
+package framework.Observer;
 
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import framework.observer.Observer;
 
 public interface Observable<EventType,T> {
     Map<framework.EventType, Set<Observer>> getObserversList();

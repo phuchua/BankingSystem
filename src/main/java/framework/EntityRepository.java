@@ -1,7 +1,7 @@
 package framework;
 
 import framework.Storage.Storable;
-import framework.observer.Observable;
+import framework.Observer.Observable;
 import framework.observer.Observer;
 
 import java.util.Collection;
