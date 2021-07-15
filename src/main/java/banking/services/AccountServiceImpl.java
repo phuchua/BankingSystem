@@ -85,7 +85,7 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	public void setInterest() {
 		for(Account account: this.accountRepository.getAll()){
-			//this.deposit();
+			this.deposit(account.getId(),account.getInterestStrategy().calculateInterest(account.getBalance()));
 		}
 	}
 
