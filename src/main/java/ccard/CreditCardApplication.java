@@ -5,8 +5,10 @@ import ccard.controllers.CreditAccountController;
 import ccard.enums.CreditCardType;
 import common.enums.AccountType;
 import common.models.Account;
+import common.models.AccountEntry;
 
 import java.time.LocalDate;
+import java.util.Collection;
 
 public class CreditCardApplication {
 
@@ -25,6 +27,11 @@ public class CreditCardApplication {
         double currentBalance = creditAccount.getBalance();
         System.out.println("Current Balance: " + currentBalance);
         System.out.println("Minimum Payment " + creditAccountController.getMinimumPayment(creditAccount.getId()));
+        Collection<AccountEntry> accountEntries = creditAccountController.getMonthlyBilling(creditAccount.getId());
+        for (AccountEntry entry :
+                accountEntries) {
+            System.out.println( entry.getAmount());
+        }
     }
 
 }

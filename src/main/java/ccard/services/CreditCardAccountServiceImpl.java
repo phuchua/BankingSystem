@@ -14,7 +14,10 @@ import common.repositories.CustomerRepository;
 import common.services.AccountService;
 import framework.RepositoryEvents;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 
 public class CreditCardAccountServiceImpl implements AccountService {
@@ -100,5 +103,13 @@ public class CreditCardAccountServiceImpl implements AccountService {
 			return 0;
 		}
 		return account.getMinPaymentStrategy().calculateInterest(balance);
+	}
+
+	public Collection<AccountEntry> getMonthlyBilling(String accountNumber) {
+		CreditCard account = (CreditCard) accountRepository.loadOne(accountNumber);
+		LocalDate lastMonth = LocalDate.now().minusMonths(1);
+		return account.getEntryList().stream().filter(accountEntry ->
+				Period.between(accountEntry.getDate(), lastMonth).getDays() <= 30)
+				.collect(Collectors.toList());
 	}
 }

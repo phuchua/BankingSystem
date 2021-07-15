@@ -5,6 +5,7 @@ import ccard.factory.CreditCardFactory;
 import ccard.services.CreditCardAccountServiceImpl;
 import common.enums.AccountType;
 import common.models.Account;
+import common.models.AccountEntry;
 import common.models.Customer;
 import common.models.Person;
 import framework.Controller;
@@ -52,4 +53,9 @@ public class CreditAccountController implements Controller {
     public double getMinimumPayment(String accountNumber){
         return accountService.getMinimumPayment(accountNumber);
     }
+
+    public Collection<AccountEntry>  getMonthlyBilling(String accountNumber) {
+        return accountService.getMonthlyBilling(accountNumber);
+    }
+
 }
