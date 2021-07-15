@@ -4,8 +4,8 @@ import javax.swing.*;
 import java.awt.event.*;
 
 public class JDialog_AddPAcc extends AccountDialog {
-    JTextField JTextField_BD;
-    BankFrm bankFrame;
+    private JTextField JTextField_BD;
+    private BankFrm bankFrame;
     public JDialog_AddPAcc(BankFrm parent) {
         super(parent, "Add Personal Account");
         bankFrame = parent;

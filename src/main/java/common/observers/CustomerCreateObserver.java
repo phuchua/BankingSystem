@@ -3,7 +3,7 @@ package common.observers;
 import common.models.Customer;
 import framework.Components.Notification.Email.EmailMessage;
 import framework.Components.Notification.Email.EmailNotification;
-import framework.Observer.Observer;
+import framework.observer.Observer;
 
 public class CustomerCreateObserver implements Observer<Customer> {
 

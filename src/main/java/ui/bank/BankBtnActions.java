@@ -1,6 +1,7 @@
 package ui.bank;
 
 import banking.controllers.AccountController;
+import banking.controllers.IAccountController;
 import common.models.Account;
 
 import java.awt.event.ActionListener;
@@ -9,7 +10,7 @@ import java.time.LocalDate;
 public class BankBtnActions extends BtnActions {
     private BankFrm bankFrm;
 
-    public BankBtnActions(AccountController accountController, BankFrm bankFrm) {
+    public BankBtnActions(IAccountController accountController, BankFrm bankFrm) {
         super(accountController, bankFrm);
         this.bankFrm = bankFrm;
     }

@@ -5,8 +5,8 @@ import common.dao.CustomerDAO;
 import common.models.Customer;
 import framework.DAO;
 import framework.EntityRepository;
-import framework.Observer.Observer;
 import framework.RepositoryEvents;
+import framework.observer.Observer;
 
 import java.util.HashMap;
 import java.util.Map;

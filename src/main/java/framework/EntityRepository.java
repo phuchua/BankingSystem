@@ -1,11 +1,13 @@
 package framework;
 
-
-import framework.Observer.Observable;
-import framework.Observer.Observer;
 import framework.Storage.Storable;
-import java.util.*;
+import framework.observer.Observable;
+import framework.observer.Observer;
 
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 public abstract class EntityRepository<O extends Storable<K>,K> implements Observable<RepositoryEvents,O> {
     DAO<O,K> dao;

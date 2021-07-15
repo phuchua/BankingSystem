@@ -1,7 +1,7 @@
 package common.observers;
 
 import common.models.*;
-import framework.Observer.Observer;
+import framework.observer.Observer;
 
 public class AccountUpdateObserver implements Observer<Account> {
     @Override
