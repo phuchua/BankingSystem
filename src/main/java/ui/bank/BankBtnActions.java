@@ -1,29 +1,35 @@
 package ui.bank;
 
 
-import framework.core.AccountService;
+import banking.controllers.AccountController;
+import common.models.Account;
 
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 
 public class BankBtnActions extends BtnActions {
     private BankFrm bankFrm;
-    public BankBtnActions(AccountService accountService, BankFrm bankFrm) {
-        super(accountService, bankFrm);
+
+    public BankBtnActions(AccountController accountController, BankFrm bankFrm) {
+        super(accountController, bankFrm);
         this.bankFrm = bankFrm;
     }
 
-    public ActionListener addPersonalAccount = event -> {
+    public final ActionListener addPersonalAccount = event -> {
         openDialog(new JDialog_AddPAcc(bankFrm));
         if (bankFrm.isNewAccount()) {
-//            accountService.createAccount(bankFrm.getAccountNo(), bankFrm.getClientName(), getAccStrategy(bankFrm.getAccountType()), getAccType(bankFrm.getAccountType()),
-//                    bankFrm.getStreet(), bankFrm.getCity(), bankFrm.getStateAddress(), bankFrm.getZip(), "");
+            Account account = getAccountController().createPersonalAccount(bankFrm.getAccountNo(),
+                    bankFrm.getClientName(), bankFrm.getStateAddress(), bankFrm.getCity(), bankFrm.getStateAddress(),
+                    bankFrm.getZip(), bankFrm.getCustomerEmail(), LocalDate.parse(bankFrm.getBirthDate()), getAccType(bankFrm.getAccountType()));
 
-            bankFrm.updateTable("P");
+            bankFrm.updateTable(account);
         }
     };
 
     public ActionListener addBusinessAccount = event -> {
         openDialog(new JDialog_AddCompAcc(bankFrm));
-        bankFrm.updateTable("C");
+        Account account = getAccountController().createCompanyAccount(bankFrm.getAccountNo(), bankFrm.getClientName(), bankFrm.getStateAddress(), bankFrm.getCity(), bankFrm.getStateAddress(),
+                bankFrm.getZip(), bankFrm.getCustomerEmail(), Integer.parseInt(bankFrm.getNoOfEmployees()), getAccType(bankFrm.getAccountType()));
+        bankFrm.updateTable(account);
     };
 }

@@ -1,5 +1,6 @@
 package ui.ccard;
 
+import common.models.Account;
 import lombok.*;
 import ui.bank.*;
 import javax.swing.*;
@@ -16,8 +17,7 @@ public class CardFrm extends MainFrame {
     public CardFrm() {
         setFrame(this);
         btnActions = new CardBtnActions(null, this);
-        overview("Credit-card processing Application.",
-                getTableColumnNames(), getButtons());
+        overview("Credit-card processing Application.", getTableColumnNames(), getButtons());
     }
 
     public static void main(String args[]) {
@@ -33,9 +33,9 @@ public class CardFrm extends MainFrame {
     }
 
     @Override
-    public void updateTable(String p) {
+    public void updateTable(Account account) {
         if (isNewAccount()) {
-            changeTableContent(getClientName(), getCcNumber(), getExpDate(), getAccountType(), "0");
+            changeTableContent(account.getId(), account.getCustomer().getName(), account.getCustomer().getCity(), account.getCustomer().getCustomerType().name(), account.getAccountType().name(), Double.toString(account.getBalance()));
             setNewAccount(false);
         }
     }

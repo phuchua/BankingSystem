@@ -1,5 +1,6 @@
 package ui.bank;
 
+import common.models.Account;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,6 +8,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -21,7 +23,7 @@ public abstract class MainFrame extends JFrame {
     private JPanel panel;
     private JScrollPane JScrollPane1;
     private MainFrame frame;
-    private Collection<Object> rowData;
+    private Object[] rowData;
 
     public final void overview(String title, Collection<String> tableColumns, Collection<JButton> buttons) {
         prepareContentPane(title, tableColumns);
@@ -49,7 +51,7 @@ public abstract class MainFrame extends JFrame {
         for (String cols : tableColumns) {
             model.addColumn(cols);
         }
-        rowData = new ArrayList<>();
+        rowData = new Object[tableColumns.size()];
         newAccount = false;
         panel.add(JScrollPane1);
         JScrollPane1.getViewport().add(dataTable);
@@ -61,14 +63,15 @@ public abstract class MainFrame extends JFrame {
         }
     }
 
-    protected void windowListeners(){};
+    protected void windowListeners() {
+    }
 
     protected void panelBounds() {
-        panel.setBounds(0,0,575,310);
+        panel.setBounds(0, 0, 575, 310);
     }
 
     protected void setFrameSize() {
-        setSize(575,310);
+        setSize(575, 310);
     }
 
     protected void tableBounds() {
@@ -76,14 +79,27 @@ public abstract class MainFrame extends JFrame {
     }
 
     protected void scrollPanelBounds() {
-        JScrollPane1.setBounds(12,92,444,160);
+        JScrollPane1.setBounds(12, 92, 444, 160);
     }
 
     protected void changeTableContent(String... cols) {
-        Collections.addAll(rowData, cols);
-        getModel().addRow(rowData.toArray());
+        System.arraycopy(cols, 0, rowData, 0, rowData.length);
+        getModel().addRow(rowData);
         getDataTable().getSelectionModel().setAnchorSelectionIndex(-1);
     }
 
-    public abstract void updateTable(String p);
+    private void clearTableData() {
+        getModel().setRowCount(0);
+    }
+
+    public void updateAllTableRec(Collection<Account> accounts) {
+        clearTableData();
+
+        for (Account account:  accounts) {
+            setNewAccount(true);
+            updateTable(account);
+        }
+    }
+
+    public abstract void updateTable(Account account);
 }

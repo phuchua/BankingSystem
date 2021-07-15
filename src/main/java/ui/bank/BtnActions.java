@@ -1,25 +1,23 @@
 package ui.bank;
 
-import framework.core.AccountClass;
-import framework.core.AccountService;
-import framework.strategy.CheckingsInterest;
-import framework.strategy.CreditCardInterest;
-import framework.strategy.InterestStrategy;
-import framework.strategy.SavingsInterest;
+import banking.controllers.AccountController;
+
+import common.enums.AccountType;
+import common.models.Account;
+import lombok.Getter;
 import ui.common.JDialog_Deposit;
 import ui.common.JDialog_Withdraw;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
 
-import static framework.core.AccountClass.*;
-
+@Getter
 public class BtnActions {
-    private AccountService accountService;
+    private AccountController accountController;
     private MainFrame frame;
 
-    public BtnActions(AccountService accountService, MainFrame frame) {
-        this.accountService = accountService;
+    public BtnActions(AccountController accountController, MainFrame frame) {
+        this.accountController = accountController;
         this.frame = frame;
     }
 
@@ -27,27 +25,38 @@ public class BtnActions {
 
     public final ActionListener deposit = event -> {
         int selection = frame.getDataTable().getSelectionModel().getMinSelectionIndex();
-        if (selection >= 0) {
-            String accNo = (String) frame.getDataTable().getValueAt(selection, 0);
+        String accNo = getSelectedAccountNo(selection);
+        if (accNo != null) {
             openDialog(new JDialog_Deposit(frame, accNo), 430, 15, 275, 140);
-            long depositInp = Long.parseLong(frame.getAmountDeposit());
-            String sAmount = (String) frame.getDataTable().getValueAt(selection, 5);
-            long currentAmount = Long.parseLong(sAmount);
-            long newAmount = currentAmount + depositInp;
-            frame.getDataTable().setValueAt(String.valueOf(newAmount), selection, 5);
+            double currentAmount = getCurrentBalance(accNo);
+            double inpAmount = Double.parseDouble(frame.getAmountDeposit());
+            accountController.deposit(accNo, inpAmount);
+            frame.getDataTable().setValueAt(String.valueOf(currentAmount + inpAmount), selection, 5);
         }
     };
+
+    private double getCurrentBalance(String accNo) {
+        Account account = accountController.getAccountById(accNo);
+        return account.getBalance();
+    }
+
+    private String getSelectedAccountNo(int selection) {
+        if (selection >= 0)
+            return (String) frame.getDataTable().getValueAt(selection, 0);
+        return null;
+    }
 
     public final ActionListener withdraw = event -> {
         int selection = frame.getDataTable().getSelectionModel().getMinSelectionIndex();
         if (selection >= 0) {
-            String accNo = (String) frame.getDataTable().getValueAt(selection, 0);
-            openDialog( new JDialog_Withdraw(frame, accNo),430, 15, 275, 140);
-            String sAmount = (String) frame.getDataTable().getValueAt(selection, 5);
-            long currentAmount = Long.parseLong(sAmount);
-            long depositInp = Long.parseLong(frame.getAmountDeposit());
-            long newAmount = currentAmount - depositInp;
+            String accNo = getSelectedAccountNo(selection);
+            openDialog(new JDialog_Withdraw(frame, accNo), 430, 15, 275, 140);
+            double currentAmount = getCurrentBalance(accNo);
+            long withdrawAmt = Long.parseLong(frame.getAmountDeposit());
+            double newAmount = currentAmount - withdrawAmt;
             frame.getDataTable().setValueAt(String.valueOf(newAmount), selection, 5);
+            accountController.withdraw(accNo, withdrawAmt);
+
             if (newAmount < 0) {
                 JOptionPane.showMessageDialog(frame, " Account " +
                                 accNo + " : balance is negative: $" + newAmount + " !",
@@ -56,35 +65,33 @@ public class BtnActions {
         }
     };
 
-    public final ActionListener applyInterest = event -> JOptionPane.showMessageDialog(frame, "Add interest to all accounts",
-            "Add interest to all accounts", JOptionPane.WARNING_MESSAGE);
+    public final ActionListener applyInterest = event -> {
+        JOptionPane.showMessageDialog(frame, "Add interest to all accounts",
+                "Add interest to all accounts", JOptionPane.WARNING_MESSAGE);
+        accountController.addInterest();
+        frame.updateAllTableRec(accountController.getAllAccounts());
+    };
 
-    public void openDialog(JDialog jDialog){
+    public void openDialog(JDialog jDialog) {
         openDialog(jDialog, 450, 20, 300, 330);
     }
-    public void openDialog(JDialog jDialog, int x, int y, int width, int height){
+
+    public void openDialog(JDialog jDialog, int x, int y, int width, int height) {
         jDialog.setBounds(x, y, width, height);
         jDialog.show();
     }
 
-    private InterestStrategy getAccStrategy(String accountType) {
-        InterestStrategy strategy = null;
+    protected AccountType getAccType(String accountType) {
+        AccountType type = null;
         switch (accountType) {
-            case "P": strategy = new CheckingsInterest(); break;
-            case "CREDITCARD": strategy = new CreditCardInterest(); break;
-            case "C": strategy = new SavingsInterest(); break;
-            default: break;
-        }
-        return strategy;
-    }
-
-    private AccountClass getAccType(String accountType) {
-        AccountClass type = null;
-        switch (accountType) {
-            case "P": type = PERSONAL; break;
-            case "COMPANY": type = COMPANY; break;
-            case "CREDITCARD": type = CREDITCARD; break;
-            default: break;
+            case "S":
+                type = AccountType.SAVING;
+                break;
+            case "Ch":
+                type = AccountType.CHECKING;
+                break;
+            default:
+                break;
         }
         return type;
     }

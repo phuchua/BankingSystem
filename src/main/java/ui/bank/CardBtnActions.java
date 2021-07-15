@@ -1,16 +1,19 @@
 package ui.bank;
 
-import framework.core.AccountService;
+import banking.controllers.AccountController;
+import common.models.Account;
 import ui.ccard.CardFrm;
 import ui.ccard.JDialogGenBill;
 import ui.ccard.JDialog_AddCCAccount;
 
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 
 public class CardBtnActions extends BtnActions {
     private CardFrm cardFrm;
-    public CardBtnActions(AccountService accountService, CardFrm cardFrm) {
-        super(accountService, cardFrm);
+
+    public CardBtnActions(AccountController accountController, CardFrm cardFrm) {
+        super(accountController, cardFrm);
         this.cardFrm = cardFrm;
     }
 
@@ -19,10 +22,11 @@ public class CardBtnActions extends BtnActions {
     public final ActionListener addCreditCardAccount = event -> {
         openDialog(new JDialog_AddCCAccount(cardFrm));
         if (cardFrm.isNewAccount()) {
-//            accountService.createAccount(cardFrm.getAccountNo(), cardFrm.getClientName(), getAccStrategy(cardFrm.getAccountType()), getAccType(cardFrm.getAccountType()),
-//                    cardFrm.getStreet(), cardFrm.getCity(), cardFrm.getStateAddress(), cardFrm.getZip(), "");
+//            create credit card
+            Account account = getAccountController().createPersonalAccount(cardFrm.getAccountNo(), cardFrm.getClientName(), cardFrm.getStateAddress(), cardFrm.getCity(), cardFrm.getStateAddress(),
+                    cardFrm.getZip(), cardFrm.getCustomerEmail(), LocalDate.parse(cardFrm.getCcNumber()), getAccType(cardFrm.getAccountType()));
 
-            cardFrm.updateTable("P");
+            cardFrm.updateTable(account);
         }
     };
 }

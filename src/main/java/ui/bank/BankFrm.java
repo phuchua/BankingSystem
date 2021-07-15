@@ -1,27 +1,29 @@
 package ui.bank;
 
-import framework.core.*;
-import framework.factory.EnvironmentType;
-import lombok.*;
+import banking.controllers.AccountController;
+import common.models.Account;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.swing.*;
-import java.awt.event.*;
-import java.util.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.Arrays;
+import java.util.Collection;
 
 @Setter
 @Getter
 public class BankFrm extends MainFrame {
     private BankBtnActions btnActions;
-    private AccountService accountService;
+    private AccountController accountController;
     private String birthDate;
     private String noOfEmployees;
 
     public BankFrm() {
         setFrame(this);
-        setBtnActions(new BankBtnActions(null, this));
+        setBtnActions(new BankBtnActions(new AccountController(), this));
         overview("Bank Application.", Arrays.asList("AccountNr", "Name", "City", "P/C", "Ch/S", "Amount"), getButtons());
-
-        accountService = new AccountServiceImpl(EnvironmentType.DEVELOPMENT);
+        accountController = new AccountController();
     }
 
     public static void main(String args[]) {
@@ -47,13 +49,10 @@ public class BankFrm extends MainFrame {
         }
     }
 
-    public void updateTable(String pc) {
+    public void updateTable(Account account) {
         if (isNewAccount()) {
-            changeTableContent(getAccountNo(), getClientName(), getCity(), pc, getAccountType(), "0");
+            changeTableContent(account.getId(), account.getCustomer().getName(), account.getCustomer().getCity(), account.getCustomer().getCustomerType().name(), account.getAccountType().name(), Double.toString(account.getBalance()));
             setNewAccount(false);
-//            accountService.createPersonalAccount(getAccountNo(), getClientName(), getAccountType(),
-//                    new CheckingsInterest(), AccountClass.PERSONAL, getCity(),
-//                    getStateAddress(), getZip(), getCustomerEmail(), getBirthDate());
         }
     }
 
