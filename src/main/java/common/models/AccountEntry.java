@@ -1,14 +1,14 @@
 package common.models;
 
 import framework.Storage.Storable;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.UUID;
 
-import lombok.Data;
-
-@Data
+@Setter
+@Getter
 public  class AccountEntry implements Storable<String> {
 
     private String id;
@@ -35,4 +35,16 @@ public  class AccountEntry implements Storable<String> {
         return this.id;
     }
 
+    @Override
+    public String toString() {
+        return "[" +
+                "id='" + id + '\'' +
+                ", date=" + date +
+                ", amount=" + amount +
+                ", description='" + description + '\'' +
+                ", fromAccountNumber='" + fromAccountNumber + '\'' +
+                ", fromPersonName='" + fromPersonName + '\'' +
+                ", balance=" + account.getBalance() +
+                ']';
+    }
 }

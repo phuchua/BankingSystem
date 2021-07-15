@@ -37,7 +37,7 @@ public class CardFrm extends MainFrame {
     @Override
     public void updateTable(Account account) {
         if (isNewAccount()) {
-            changeTableContent(account.getCustomer().getName(), account.getId(), account.getId(), account.getAccountType().name(), Double.toString(account.getBalance()));
+            changeTableContent(account.getCustomer().getName(), account.getId(), getExpDate(), getAccountType(), Double.toString(account.getBalance()));
             setNewAccount(false);
         }
     }

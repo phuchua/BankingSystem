@@ -12,20 +12,23 @@ import java.time.LocalDate;
 
 public class CardBtnActions extends BtnActions {
     private CardFrm cardFrm;
-    private Controller cac;
-
     public CardBtnActions(Controller controller, CardFrm cardFrm) {
         super(controller, cardFrm);
         this.cardFrm = cardFrm;
-        cac = controller;
     }
 
-    public final ActionListener generateBill = event -> openDialog(new JDialogGenBill(cardFrm));
+    public final ActionListener generateBill = event -> {
+        int selection = cardFrm.getDataTable().getSelectionModel().getMinSelectionIndex();
+        String accNo = getSelectedAccountNo(selection);
+        if (accNo != null) {
+            openDialog(new JDialogGenBill(cardFrm, getController().getMonthlyBilling(accNo)));
+        }
+    };
 
     public final ActionListener addCreditCardAccount = event -> {
         openDialog(new JDialog_AddCCAccount(cardFrm));
         if (cardFrm.isNewAccount()) {
-            Account account = cac.createAccount(cardFrm.getCcNumber(), cardFrm.getClientName(), cardFrm.getStateAddress(),
+            Account account = getController().createAccount(cardFrm.getCcNumber(), cardFrm.getClientName(), cardFrm.getStateAddress(),
                     cardFrm.getCity(), cardFrm.getStateAddress(), cardFrm.getZip(), cardFrm.getCustomerEmail(),
                     LocalDate.parse(cardFrm.getExpDate()), getAccType(cardFrm.getAccountType()), getCCType(cardFrm.getAccountType()));
 

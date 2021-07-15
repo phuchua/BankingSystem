@@ -1,6 +1,5 @@
 package ui.bank;
 
-
 import banking.controllers.AccountController;
 import common.models.Account;
 

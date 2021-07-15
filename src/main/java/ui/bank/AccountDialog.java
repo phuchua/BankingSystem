@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionListener;
 
 @Setter
@@ -39,6 +40,51 @@ public abstract class AccountDialog extends JDialog {
         getContentPane().setLayout(null);
         setSize(283, 303);
         setVisible(false);
+    }
+
+    private void setCommonFields() {
+        JLabel1.setText("Name");
+        getContentPane().add(JLabel1);
+        JLabel1.setForeground(java.awt.Color.black);
+        JLabel1.setBounds(12, 60, 48, 24);
+        getContentPane().add(JTextField_NAME);
+        JTextField_NAME.setBounds(84, 60, 156, 20);
+
+        JLabel2.setText("Street");
+        getContentPane().add(JLabel2);
+        JLabel2.setForeground(java.awt.Color.black);
+        JLabel2.setBounds(12, 84, 48, 24);
+        getContentPane().add(JTextField_STR);
+        JTextField_STR.setBounds(84, 84, 156, 20);
+
+
+        JLabel3.setText("City");
+        getContentPane().add(JLabel3);
+        JLabel3.setForeground(java.awt.Color.black);
+        JLabel3.setBounds(12, 108, 48, 24);
+        getContentPane().add(JTextField_CT);
+        JTextField_CT.setBounds(84, 108, 156, 20);
+
+        JLabel4.setText("State");
+        getContentPane().add(JLabel4);
+        JLabel4.setForeground(java.awt.Color.black);
+        JLabel4.setBounds(12, 132, 48, 24);
+        getContentPane().add(JTextField_ST);
+        JTextField_ST.setBounds(84, 132, 156, 20);
+
+        JLabel5.setText("Zip");
+        getContentPane().add(JLabel5);
+        JLabel5.setForeground(java.awt.Color.black);
+        JLabel5.setBounds(12, 156, 48, 24);
+        getContentPane().add(JTextField_ZIP);
+        JTextField_ZIP.setBounds(84, 156, 156, 20);
+
+        JLabel7.setText("Email");
+        getContentPane().add(JLabel7);
+        JLabel7.setForeground(Color.black);
+        JLabel7.setBounds(12, 180, 48, 24);
+        getContentPane().add(JTextField_EM);
+        JTextField_EM.setBounds(84, 180, 156, 20);
 
         JButton_OK.setText("OK");
         JButton_OK.setActionCommand("OK");
@@ -52,8 +98,14 @@ public abstract class AccountDialog extends JDialog {
 
         JButton_OK.addActionListener(okAction);
         JButton_Cancel.addActionListener(cancelAction);
-
     }
+
+    protected void generateFields () {
+        setCommonFields();
+        setUniqueFields();
+    }
+
+    protected abstract void setUniqueFields();
 
     protected final ActionListener okAction = event -> {
         parentFrame.setAccountNo(JTextField_ACNR.getText());

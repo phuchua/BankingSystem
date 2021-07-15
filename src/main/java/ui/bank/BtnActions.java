@@ -39,7 +39,7 @@ public abstract class BtnActions {
         return account.getBalance();
     }
 
-    private String getSelectedAccountNo(int selection) {
+    protected String getSelectedAccountNo(int selection) {
         if (selection >= 0)
             return (String) frame.getDataTable().getValueAt(selection, getAccountNoColumn());
         return null;

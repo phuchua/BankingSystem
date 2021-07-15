@@ -10,6 +10,7 @@ public class JDialog_AddCompAcc extends AccountDialog {
     public JDialog_AddCompAcc(BankFrm parent) {
         super(parent, "Add Company Account");
         setUp();
+        generateFields();
         bankFrame = parent;
     }
 
@@ -70,6 +71,11 @@ public class JDialog_AddCompAcc extends AccountDialog {
         JLabel8.setBounds(12, 72, 48, 24);
         getContentPane().add(JTextField_ACNR);
         JTextField_ACNR.setBounds(120, 72, 156, 20);
+    }
+
+    @Override
+    protected void setUniqueFields() {
+
     }
 
     @Override
