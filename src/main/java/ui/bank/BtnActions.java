@@ -1,5 +1,6 @@
 package ui.bank;
 
+import banking.controllers.IAccountController;
 import common.enums.AccountType;
 import common.models.Account;
 import framework.Controller;
@@ -12,10 +13,10 @@ import java.awt.event.ActionListener;
 
 @Getter
 public abstract class BtnActions {
-    private Controller controller;
+    private IAccountController controller;
     private MainFrame frame;
 
-    public BtnActions(Controller controller, MainFrame frame) {
+    public BtnActions(IAccountController controller, MainFrame frame) {
         this.controller = controller;
         this.frame = frame;
     }
