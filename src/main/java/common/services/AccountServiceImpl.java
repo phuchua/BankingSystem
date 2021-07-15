@@ -4,12 +4,14 @@ package common.services;
 import common.models.Account;
 import common.models.AccountEntry;
 import common.models.Customer;
-import common.observers.AccountCreateObserver;
 import common.observers.AccountEntryObserver;
+import common.observers.AccountUpdateObserver;
 import common.repositories.AccountEntryRepository;
 import common.repositories.AccountRepository;
 import common.repositories.CustomerRepository;
 import framework.RepositoryEvents;
+
+import java.util.Collection;
 
 
 public class AccountServiceImpl implements AccountService {
@@ -20,14 +22,14 @@ public class AccountServiceImpl implements AccountService {
 
 	public AccountServiceImpl(){
 		accountRepository = new AccountRepository();
-		accountRepository.addObserver(new AccountCreateObserver(), RepositoryEvents.POST_SAVE);
+		accountRepository.addObserver(new AccountUpdateObserver(),RepositoryEvents.POST_UPDATE);
 		customerRepository = new CustomerRepository();
 		accountEntryRepository = new AccountEntryRepository();
 		accountEntryRepository.addObserver(new AccountEntryObserver(),RepositoryEvents.POST_SAVE);
 	}
 
 	@Override
-	public void createAccount(Account account, Customer customer) {
+	public Account createAccount(Account account, Customer customer) {
 		Customer dbCustomer = customerRepository.loadOne(customer.getId());
 		if(dbCustomer == null){
 			customerRepository.save(customer);
@@ -36,6 +38,7 @@ public class AccountServiceImpl implements AccountService {
 		}
 		account.setCustomer(customer);
 		accountRepository.save(account);
+		return account;
 	}
 
 	@Override
@@ -54,7 +57,6 @@ public class AccountServiceImpl implements AccountService {
 
 	@Override
 	public void withdraw(String accountNumber, double amount) {
-
 		Account account = accountRepository.loadOne(accountNumber);
 		if(account == null){
 			throw new IllegalArgumentException();
@@ -66,5 +68,16 @@ public class AccountServiceImpl implements AccountService {
 		account.addEntry(entry);
 		accountRepository.update(account);
 	}
+
+	@Override
+	public Collection<Account> getAllAccounts() {
+		return this.accountRepository.getAll();
+	}
+
+	@Override
+	public Account getAccountById(String accountId) {
+		return this.accountRepository.loadOne(accountId);
+	}
+
 
 }

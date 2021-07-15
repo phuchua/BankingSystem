@@ -11,19 +11,13 @@ import framework.Observer.Observer;
 public class AccountEntryObserver implements Observer<AccountEntry> {
 
     @Override
-    public void update(AccountEntry o) {
-        this.check(o.getAccount().getCustomer(),o);
-    }
-
-    private void check(Company customer,AccountEntry accountEntry){
-        EmailMessage message = new EmailMessage(customer.getEmail(),"Account Transaction","Account Transaction on account#: "+o.getAccount().getId());
-        (new EmailNotification(message)).send();
-    }
-
-    private void check(Person customer, AccountEntry accountEntry){
-        if(Math.abs(accountEntry.getAmount()) > 500  ){
-            EmailMessage message = new EmailMessage(customer.getEmail(),"Account Transaction","Account Transaction on account#: "+o.getAccount().getId());
-            (new EmailNotification(message)).send();
+    public void update(AccountEntry o)
+    {
+        if(o.getAccount().getCustomer().getTransactionStrategy() !=null){
+            o.getAccount().getCustomer().getTransactionStrategy().checkForAlert(o);
         }
+
     }
+
+
 }

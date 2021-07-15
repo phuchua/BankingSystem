@@ -10,6 +10,6 @@ public class EmailNotification implements Notification {
 
     @Override
     public void send() {
-        System.out.println("Send Email to "+message.getTo());
+        System.out.println("Send Email to "+message.getTo() +" Message: "+message.getBody());
     }
 }
