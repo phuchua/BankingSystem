@@ -1,6 +1,7 @@
 package ccard.services;
 
 
+import banking.command.Command;
 import ccard.strategy.GoldCCInterestStrategy;
 import common.models.Account;
 import common.models.AccountEntry;
@@ -73,6 +74,16 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
+	public void transferFunds(String fromAccountNumber, String toAccountNumber, double amount, String description) {
+
+	}
+
+	@Override
+	public Account getAccount(String accountNumber) {
+		return null;
+	}
+
+	@Override
 	public Collection<Account> getAllAccounts() {
 		return this.accountRepository.getAll();
 	}
@@ -87,6 +98,31 @@ public class AccountServiceImpl implements AccountService {
 		for(Account account: this.accountRepository.getAll()){
 			//this.deposit();
 		}
+	}
+
+	@Override
+	public void addCommand(Command cmd) {
+
+	}
+
+	@Override
+	public void updateUndoRedoPosition(int undoRedoPosition) {
+
+	}
+
+	@Override
+	public int getUndoRedoPosition() {
+		return 0;
+	}
+
+	@Override
+	public void undo() {
+
+	}
+
+	@Override
+	public void redo() {
+
 	}
 
 

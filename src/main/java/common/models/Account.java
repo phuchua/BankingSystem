@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public  class Account implements Storable<String> {
+public class Account implements Storable<String> {
     private String id;
     private InterestStrategy interestStrategy;
     private Customer customer;
@@ -25,6 +25,12 @@ public  class Account implements Storable<String> {
         entryList = new ArrayList<AccountEntry>();
     }
 
+    public void addInterest(){
+        double balance = getBalance();
+        double amount = interestStrategy.calculateInterest(balance);
+        AccountEntry entry = new AccountEntry(amount, "interest", "", "");
+    }
+
     @Override
     public String getStorageKey() {
         return this.id;
@@ -34,6 +40,9 @@ public  class Account implements Storable<String> {
         entryList.add(accountEntry);
     }
 
+    public String getAccountNumber() {
+        return id;
+    }
 
     public double getBalance() {
         double balance = 0;
@@ -41,5 +50,15 @@ public  class Account implements Storable<String> {
             balance += entry.getAmount();
         }
         return balance;
+    }
+
+    public void transferFunds(Account toAccount, double amount, String description) {
+        AccountEntry fromEntry = new AccountEntry(-amount, description, toAccount.getAccountNumber(),
+                toAccount.getCustomer().getName());
+        AccountEntry toEntry = new AccountEntry(amount, description, toAccount.getAccountNumber(),
+                toAccount.getCustomer().getName());
+
+        entryList.add(fromEntry);
+        toAccount.addEntry(toEntry);
     }
 }

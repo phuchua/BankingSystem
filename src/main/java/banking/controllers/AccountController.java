@@ -15,7 +15,7 @@ public class AccountController implements Controller {
     AccountService accountService;
 
     public AccountController(){
-        accountService = new AccountServiceImpl();
+        accountService = AccountServiceImpl.getInstance();
     }
 
     public Account createPersonalAccount(String accountNumber, String name, String street, String city, String state, String zip, String email, LocalDate dob, AccountType accountType){
@@ -39,6 +39,10 @@ public class AccountController implements Controller {
 
     public void withdraw(String accountNumber, double amount) {
         accountService.withdraw(accountNumber,amount);
+    }
+
+    public Account getAccount(String accountNumber) {
+        return accountService.getAccount(accountNumber);
     }
 
     public Collection<Account> getAllAccounts() {
