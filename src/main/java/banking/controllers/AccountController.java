@@ -13,7 +13,7 @@ import java.time.LocalDate;
 import java.util.Collection;
 import java.util.UUID;
 
-public class AccountController extends Controller {
+public class AccountController implements IAccountController {
     AccountService accountService;
 
     public AccountController(){
