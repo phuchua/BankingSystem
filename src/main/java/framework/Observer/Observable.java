@@ -1,8 +1,8 @@
-package framework.Observer;
+package framework.observer;
 
-import framework.RepositoryEvents;
-
-import java.util.*;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 public interface Observable<EventType,T> {
     Map<framework.EventType, Set<Observer>> getObserversList();
